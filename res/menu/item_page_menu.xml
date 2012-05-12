@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:id="@+id/menu_cart"
+	    android:icon="@drawable/goods"
+	    android:showAsAction="ifRoom"/>
+    
+    <item android:id="@+id/menu_further"
+	    android:icon="@drawable/further"
+	    android:showAsAction="ifRoom"/>
+    
+</menu>
