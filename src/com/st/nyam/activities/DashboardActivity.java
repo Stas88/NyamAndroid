@@ -5,16 +5,20 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -80,24 +84,20 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 			break;
 		case R.id.home_btn_feature4:
 			Log.d(TAG, "home_btn_feature4 pressed");
-			if (HttpFactory.isNetworkAvailable(this)) {
-				Log.d(TAG, "Add button pressed Network eavailable");
-				if (NyamApplication.isPasswordExists()) {
-					Log.d(TAG, "Something stored");
-					Intent intentFavorites = new Intent(this,
-							MainListActivity.class);
-					ArrayList<RecipeGeneral> recipes = db.getRecipes();
-					intentFavorites.putExtra("Recipes", recipes);
-					intentFavorites.setAction(Constants.ACTION_FAVORITE_RECIPES);
-					intentFavorites.putExtra("URL", Constants.URL_RECIPES
-							+ Constants.JSON);
-					startActivityForResult(intentFavorites, 1);
-				}
-				else {
-					showDialog();
-				}
-			} else {
-				showDialog(Constants.DAILOG_INTERNET_UNAVAILABLE);
+			Log.d(TAG, "Add button pressed Network eavailable");
+			if (NyamApplication.isPasswordExists()) {
+				Log.d(TAG, "Something stored");
+				Intent intentFavorites = new Intent(this,
+						MainListActivity.class);
+				ArrayList<RecipeGeneral> recipes = db.getRecipes();
+				intentFavorites.putExtra("Recipes", recipes);
+				intentFavorites.setAction(Constants.ACTION_FAVORITE_RECIPES);
+				intentFavorites.putExtra("URL", Constants.URL_RECIPES
+						+ Constants.JSON);
+				startActivityForResult(intentFavorites, 1);
+			}
+			else {
+				showDialog();
 			}
 			break;
 		case R.id.home_btn_feature1:
@@ -129,8 +129,12 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 			 * startActivity(mainCategoryIntent); } else {
 			 * showDialog(Constants.DAILOG_INTERNET_UNAVAILABLE); }
 			 */
-			Intent mainCategoryIntent = new Intent(this,ExpandableCategoriesActivity.class);
-			startActivity(mainCategoryIntent);
+			if (HttpFactory.isNetworkAvailable(this)) {
+				Intent mainCategoryIntent = new Intent(this,ExpandableCategoriesActivity.class);
+				startActivity(mainCategoryIntent);
+			} else {
+				showDialog(Constants.DAILOG_INTERNET_UNAVAILABLE);
+			}
 			break;
 		default:
 			break;
@@ -188,6 +192,31 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 				DashboardActivity.this.clearFields();
 			}
 		}
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialogCurrent = null;
+		AlertDialog.Builder builder;
+		switch(id){
+			case Constants.DAILOG_INTERNET_UNAVAILABLE:
+				builder = new AlertDialog.Builder(this);
+				builder.setMessage("Интернет недоступен")
+			       .setCancelable(false)
+			       .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	try {
+			       	        dialog.dismiss();
+			       	        dialog = null;
+			       	    } catch (Exception e) {
+			       	        Log.d(TAG, e.getMessage());
+			       	    }
+			           }
+			       });
+				dialogCurrent = builder.create();;
+				break;
+		}
+		return dialogCurrent;
 	}
 
 }

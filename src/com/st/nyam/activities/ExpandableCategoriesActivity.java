@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.SimpleExpandableListAdapter;
 
 import com.actionbarsherlock.app.SherlockExpandableListActivity;
@@ -22,7 +24,7 @@ import com.st.nyam.factories.DataBaseFactory;
 import com.st.nyam.models.MainCategory;
 import com.st.nyam.util.Constants;
 
-public class ExpandableCategoriesActivity extends SherlockExpandableListActivity implements OnChildClickListener{
+public class ExpandableCategoriesActivity extends SherlockExpandableListActivity implements OnChildClickListener {
 	
 		  private NyamApplication application;
 		  private static final String TAG = "ExpandableListView";
@@ -38,7 +40,6 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 	        super.onCreate(savedInstanceState);
 	        LayoutInflater inflater = LayoutInflater.from(this);
 	        ExpandableListView list = (ExpandableListView)inflater.inflate(R.layout.main, null);
-	        list.setIndicatorBounds(345,375);
 	        setContentView(list);
 	        getSupportActionBar().setTitle("Категории");
 	        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,6 +66,19 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 	            childTo);
 	        setListAdapter(adapter);
 	        
+	        list.setOnGroupExpandListener(new OnGroupExpandListener() { 
+	            @Override 
+	            public void onGroupExpand(int groupPosition) { 
+	            	adapter.getGroup(groupPosition);
+	            } 
+	        }); 
+
+	        list.setOnGroupCollapseListener(new OnGroupCollapseListener() { 
+	            @Override 
+	            public void onGroupCollapse(int groupPosition) { 
+	                // code to set your background back to your collapsed color
+	            } 
+	        }); 
 	    }
 	    
 

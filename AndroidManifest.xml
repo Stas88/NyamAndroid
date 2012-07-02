@@ -51,7 +51,9 @@
         <activity android:theme="@style/Theme.NyamTheme"
 	        android:name=".activities.ExpandableCategoriesActivity" >
         </activity>
-        
+        <activity android:theme="@style/Theme.NyamTheme"
+	        android:name=".activities.ProfileActivity" >
+        </activity>
         <service android:name=".services.SynchronizeService" />
         <service android:name=".services.ConstantSynchronizationService" />
        

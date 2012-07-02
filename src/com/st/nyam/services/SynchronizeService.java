@@ -72,13 +72,15 @@ public class SynchronizeService extends IntentService {
 	        Log.d(TAG, "SynchronizeService login: " + login);
 			Log.d(TAG, "SynchronizeService password: " + password);
 	        Log.d(TAG, "onHandleIntent 3");
-	        ArrayList<RecipeGeneral> recipes =  getSyncRecipes(knownRecipes);
-	        Log.d(TAG, "onHandleIntent 4");
-	        Bundle resultData = new Bundle();
-	        resultData.putSerializable("recipes_from_server", recipes);
-	        Log.d(TAG, "onHandleIntent 5");
-	        receiver.send(Constants.AUTHORIZATION_PASSED, resultData);
-	        Log.d(TAG, "onHandleIntent 6");    
+	        if (HttpFactory.isNetworkAvailable(this)) {
+		        ArrayList<RecipeGeneral> recipes =  getSyncRecipes(knownRecipes);
+		        Log.d(TAG, "onHandleIntent 4");
+		        Bundle resultData = new Bundle();
+		        resultData.putSerializable("recipes_from_server", recipes);
+		        Log.d(TAG, "onHandleIntent 5");
+		        receiver.send(Constants.AUTHORIZATION_PASSED, resultData);
+		        Log.d(TAG, "onHandleIntent 6");    
+	        }
 		} catch (Exception e) {
 			
 		}

@@ -27,22 +27,18 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.NetworkInfo.State;
 import android.util.Log;
 
 import com.st.nyam.NyamApplication;
-import com.st.nyam.models.Recipe;
-import com.st.nyam.models.RecipeGeneral;
-import com.st.nyam.models.Step;
 import com.st.nyam.util.Constants;
 import com.st.nyam.util.HttpDeleteWithBody;
-import com.st.nyam.util.ModelUtil;
 
 public class HttpFactory  {
 
@@ -182,16 +178,19 @@ public class HttpFactory  {
 	}
 
 	public static boolean isNetworkAvailable(Context context) {
-		ConnectivityManager cm = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = cm
-				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		ConnectivityManager conMan = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		//mobile
+		State mobile = conMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
+		//wifi
+		State wifi = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+
 		// if no network is available networkInfo will be null
 		// otherwise check if we are connected
-		if (networkInfo != null && networkInfo.isConnected()) {
+		if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) {
+			Log.d(TAG, "isNetworkAvailable true");
 			return true;
 		}
-		return true;
+		return false;
 	}
 
 	public static void sendAddToFavorites(Context context, int recipeId) throws JSONException {

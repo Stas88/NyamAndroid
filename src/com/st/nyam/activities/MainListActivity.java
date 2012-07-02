@@ -47,6 +47,7 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 	
 	private int visibleThreshold = 5;
     private int currentPage = 0;
+    
     private int previousTotal = 0;
     private boolean loading = true;
     private boolean isLastOne = true;
@@ -147,26 +148,28 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 				Log.d(TAG, "Constants.ACTION_FAVORITE_RECIPES");
 				Log.d(TAG, "Favorites");
 				Log.d(TAG, "Getting Application 123 6");
+				Log.d(TAG, "Favorites 1");
 				setSupportProgressBarIndeterminateVisibility(false);
-				boolean isFirstLogin = (Boolean)getIntent().getBooleanExtra("isFirstLogin", false);
-				if (isFirstLogin) {
-					Log.d(TAG, "Starting Service");
-					Intent serviceIntent = new Intent(this, SynchronizeService.class);
-					serviceIntent.putExtra("receiver", new DownloadReceiver(new Handler()));
-					startService(serviceIntent);
-					Log.d(TAG, "Service started");
+
+				Log.d(TAG, "Favorites 5");
+				if (dialog != null && dialog.isShowing()) {
+					try {
+			   	        dialog.dismiss();
+			   	        dialog = null;
+			   	    } catch (Exception e) {}
 				}
-				else {
-					if (dialog != null && dialog.isShowing()) {
-						try {
-				   	        dialog.dismiss();
-				   	        dialog = null;
-				   	    } catch (Exception e) {}
-					}
-					tempList = (ArrayList<RecipeGeneral>)getIntent().getSerializableExtra("Recipes");
-					adapter = new LazyAdapter(this, R.layout.list_item_picture_text, tempList, true);
-					setListAdapter(adapter);
-					
+				Log.d(TAG, "Favorites 6");
+				Log.d(TAG, "Starting favorites");
+				tempList = (ArrayList<RecipeGeneral>)getIntent().getSerializableExtra("Recipes");
+				Log.d(TAG, "tempList = " + tempList);
+				Log.d(TAG, "Favorites 7");
+				adapter = new LazyAdapter(this, R.layout.list_item_picture_text, tempList, true);
+				Log.d(TAG, "Favorites 8");
+				setListAdapter(adapter);
+				Log.d(TAG, "Favorites 9");
+				
+				if (HttpFactory.isNetworkAvailable(this)) { 
+					Log.d(TAG, "Favorites 10");
 					Log.d(TAG, "Starting Service");
 					Intent serviceIntent = new Intent(this, SynchronizeService.class);
 					serviceIntent.putExtra("receiver", new DownloadReceiver(new Handler()));
@@ -177,8 +180,11 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 					serviceIntent.putExtra("login", login);
 					serviceIntent.putExtra("password", password);
 					startService(serviceIntent);
-					Log.d(TAG, "Service started");
+					Log.d(TAG, "Favorites 11");
+				Log.d(TAG, "Service started");
 				}
+				
+				
 			} else if (action.equals(Constants.ACTION_CATALOG_RECIPES)) {
 				Log.d(TAG, "Constants.ACTION_CATALOG_RECIPES");
 				URL = (String)getIntent().getSerializableExtra("URL");
@@ -484,23 +490,28 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 	    protected void onReceiveResult(int resultCode, Bundle resultData) {
 	        super.onReceiveResult(resultCode, resultData);
 	        if (resultCode == Constants.AUTHORIZATION_PASSED) {
+	        	Log.d(TAG, "onReceiveResult 1");
 	        	tempList = (ArrayList<RecipeGeneral>)getIntent().getSerializableExtra("Recipes");
 				adapter = new LazyAdapter(MainListActivity.this, R.layout.list_item_picture_text, tempList, true);
 				setListAdapter(adapter);
 				setSupportProgressBarIndeterminateVisibility(false);
 				
 	        	ArrayList<RecipeGeneral> recipes = (ArrayList<RecipeGeneral>) resultData.getSerializable("recipes_from_server");
-	        	for (RecipeGeneral r : recipes) {
-	 	        	adapter.add((RecipeGeneral)r);
-	 	        }
-	        	if (dialog != null && dialog.isShowing()) {
-	        		try {
-	           	        dialog.dismiss();
-	           	        dialog = null;
-	           	    } catch (Exception e) {}
-				}
+	        	if (recipes != null) {
+		        	for (RecipeGeneral r : recipes) {
+		 	        	adapter.add((RecipeGeneral)r);
+		 	        }
+		        	if (dialog != null && dialog.isShowing()) {
+		        		try {
+		           	        dialog.dismiss();
+		           	        dialog = null;
+		           	    } catch (Exception e) {}
+					}
+	        	}
 	        	setResult(RESULT_OK);
 	        	Log.d(TAG, "onReceiveResult  RESULT_OK");
+	        	Log.d(TAG, "onReceiveResult 2");
+	        	return;
 	        }
 	        if (resultCode == Constants.AUTHORIZATION_NOT_PASSED) {
 	        	setResult(RESULT_CANCELED);
