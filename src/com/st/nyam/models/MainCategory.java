@@ -1,8 +1,9 @@
 package com.st.nyam.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class MainCategory {
+public class MainCategory implements Serializable {
 
 	private int id;
 	private String name;
@@ -35,6 +36,8 @@ public class MainCategory {
 		this.parent_id = parent_id;
 		this.description = description;
 	}
+	
+	public MainCategory() {}
 
 	public int getId() {
 		return id;

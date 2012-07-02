@@ -1,0 +1,17 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android"> 
+    
+    <item android:state_focused="false" 
+          android:state_selected="true" 
+          android:state_pressed="false" 
+          android:drawable="@drawable/btn_orange_actionbar"
+          android:layout_marginLeft="2dp" /> 
+
+    <item android:state_selected="false" 
+          android:state_pressed="true" 
+          android:drawable="@drawable/btn_orange_actionbar" /> 
+
+    <item android:state_selected="true" 
+          android:state_pressed="true" 
+          android:drawable="@drawable/btn_orange_actionbar" /> 
+</selector> 
+

@@ -4,7 +4,12 @@ package com.st.nyam.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.LayoutInflater;
+import android.widget.RelativeLayout;
 
 import com.st.nyam.R;
 
@@ -19,7 +24,22 @@ public class SplashActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.splash);
+		Display mDisplay= this.getWindowManager().getDefaultDisplay();
+		int width= mDisplay.getWidth();
+		int height= mDisplay.getHeight();
+		
+		LayoutInflater inflater = LayoutInflater.from(this);
+		RelativeLayout v = (RelativeLayout) inflater.inflate(R.layout.splash, null);
+		Drawable drawable;
+		if(width<height){
+			Resources res = getResources(); //resource handle
+			drawable = res.getDrawable(R.drawable.splash_bg); 
+		} else {
+			Resources res = getResources(); //resource handle
+			drawable = res.getDrawable(R.drawable.background_main_land); 
+		}
+		v.setBackgroundDrawable(drawable);
+		setContentView(v);
 		context = this.getApplication();
 		splashTread = new Thread() {
 
@@ -47,7 +67,6 @@ public class SplashActivity extends Activity {
 						finish();
 				}
 			}
-
 		};
 		splashTread.start();
 

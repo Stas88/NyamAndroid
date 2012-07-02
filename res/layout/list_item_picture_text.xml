@@ -33,9 +33,9 @@
 	    >
 	     
     <ImageView android:id="@+id/icon_little1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        android:src="@drawable/preparation_time"
+        android:layout_width="28dp"
+        android:layout_height="28dp" 
+        android:src="@drawable/cooked_dishes"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"/>
      
@@ -50,9 +50,9 @@
         android:layout_alignParentBottom="true"/>
      
     <ImageView android:id="@+id/icon_little2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        android:src="@drawable/star_grey"
+        android:layout_width="28dp"
+        android:layout_height="28dp" 
+        android:src="@drawable/rating"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
      
@@ -67,29 +67,32 @@
         android:layout_alignParentBottom="true"/>
      
      
-    <ImageView android:id="@+id/icon_little3"
+    
+    <TextView android:id="@+id/txtTitle3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-        android:src="@drawable/star_orange"
+        android:textStyle="normal"
+        android:textColor="#000000" 
+        android:textSize="22dp"
+        android:text="7" 
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"/>
+    
+    <ImageView android:id="@+id/icon_little3"
+        android:layout_width="28dp"
+        android:layout_height="28dp" 
+        android:src="@drawable/favorite_dark"
+        android:layout_toLeftOf="@id/txtTitle3"
         android:layout_alignParentBottom="true"	/>
      
-     <TextView android:id="@+id/txtTitle3"
-	        android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:layout_toLeftOf="@id/icon_little3"
-	        android:textStyle="normal"
-	        android:textColor="#ff8237" 
-	        android:textSize="22dp"
-	        android:text="7" 
-	        android:layout_alignParentBottom="true"/>
+     
 			
      </RelativeLayout>
    
 	<LinearLayout
 	    android:background="#f0c6a6"
 	    android:layout_width="fill_parent"
-	    android:layout_height="3px"
+	    android:layout_height="1px"
 	    android:layout_alignParentBottom="true">
 	</LinearLayout>       
 	 

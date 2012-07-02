@@ -2,40 +2,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_weight="1"
-    android:background="@drawable/background_main">
+    android:layout_weight="1">
     
 
 	<com.st.nyam.util.DashboardLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginTop="120dp">
-    
-    <Button
-        android:id="@+id/dashboard_button"
-        style="@style/DashboardButton"
-        android:drawableTop="@drawable/girl"
-        android:text="@string/my_profile" />
-    
-    <Button
-        android:id="@+id/home_btn_feature2"
-        style="@style/DashboardButton"
-        android:drawableTop="@drawable/recepies"
-        android:text="@string/recepies"
-        />
-    
-    <Button
-        android:id="@+id/home_btn_feature3"
-        style="@style/DashboardButton"
-        android:drawableTop="@drawable/goods"
-        android:text="@string/goods"
-        />
-    
-    <Button
-        android:id="@+id/home_btn_feature4"
-        style="@style/DashboardButton"
-        android:drawableTop="@drawable/izbrannoe"
-        android:text="@string/izbrannoe"/>
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_marginTop="120dp">
+	    
+	    <Button
+	        android:id="@+id/home_btn_feature1"
+	        style="@style/DashboardButton"
+	        android:drawableTop="@drawable/girl"
+	        android:text="@string/my_profile"/>
+	    
+	    <Button
+	        android:id="@+id/home_btn_feature2"
+	        style="@style/DashboardButton"
+	        android:drawableTop="@drawable/recepies"
+	        android:text="@string/recepies"/>
+	    
+	    <Button
+	        android:id="@+id/home_btn_feature3"
+	        style="@style/DashboardButton"
+	        android:drawableTop="@drawable/catalog_andrey"
+	        android:paddingTop="13dp"
+	        android:text="@string/catalog"/>
+	    
+	    <Button
+	        android:id="@+id/home_btn_feature4"
+	        style="@style/DashboardButton"
+	        android:drawableTop="@drawable/favorites"
+	        android:text="@string/izbrannoe"/>
     
 	</com.st.nyam.util.DashboardLayout>
 </RelativeLayout>

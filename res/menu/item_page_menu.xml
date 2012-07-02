@@ -2,12 +2,20 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <item android:id="@+id/menu_cart"
-	    android:icon="@drawable/goods"
+    <item android:id="@+id/catalog_andrey"
+	    android:icon="@drawable/catalog"
 	    android:showAsAction="ifRoom"/>
     
     <item android:id="@+id/menu_further"
 	    android:icon="@drawable/further"
 	    android:showAsAction="ifRoom"/>
+   
+    
+    <progressbar
+        android:id="@+id/progressbar_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1dp"/>
     
 </menu>

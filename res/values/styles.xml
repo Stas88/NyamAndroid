@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- 
-	<style name="Theme.NyamTheme" parent="Theme.Sherlock.Light.DarkActionBar">
-	    <item name="actionBarStyle">@style/Widget.NyamTheme.ActionBar</item>
-	    <item name="android:actionBarStyle">@style/Widget.NyamTheme.ActionBar</item>
-	</style>
-	
+    
+<style name="Theme.NyamTheme" parent="Theme.Sherlock.Light.DarkActionBar">
+  		<item name="actionBarStyle">@style/Widget.NyamTheme.ActionBar</item>
+   		<item name="android:actionBarStyle">@style/Widget.NyamTheme.ActionBar</item>
+		<item name="android:actionBarItemBackground">@drawable/action_bar_selector</item>
+        <item name="actionBarItemBackground">@drawable/action_bar_selector</item>
+</style>
+
+
+
+
+    
 	<style name="Widget.NyamTheme.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-	    <item name="android:background">@drawable/action_bar</item>
 	    <item name="background">@drawable/action_bar</item>
+	    <item name="android:background">@drawable/action_bar</item>
+		<item name="android:divider">?android:attr/dividerVertical</item>
 	</style>
-	
+
 	<style name="DashboardButton">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>
@@ -24,5 +31,21 @@
         <item name="android:paddingTop">9dp</item>
         <item name="android:onClick">onClickFeature</item>
         <item name="android:drawable">@drawable/dashboard_button</item>
+    </style> 
+    
+	<style name="FavoritesButton">
+        <item name="android:textSize">16dp</item>
+        <item name="android:background">@drawable/add_to_favorites</item>
+        <item name="android:onClick">onClick</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:drawable">@drawable/add_to_favorites</item>
+    </style> 
+    
+	<style name="RemoveFavoritesButton">
+        <item name="android:textSize">16dp</item>
+        <item name="android:background">@drawable/remove_from_favorites</item>
+        <item name="android:onClick">onClick</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:drawable">@drawable/remove_from_favorites</item>
     </style> 
 </resources>

@@ -2,12 +2,17 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     
+    <item android:id="@+id/start_step"
+	    android:icon="@drawable/left_end"
+	    android:showAsAction="always"/>
     <item android:id="@+id/previous"
 	    android:icon="@drawable/previous"
-	    android:showAsAction="ifRoom"/>
-    
+	    android:showAsAction="always"/>
     <item android:id="@+id/next"
 	    android:icon="@drawable/next"
-	    android:showAsAction="ifRoom"/>
- 
+	    android:showAsAction="always"/>
+    <item android:id="@+id/end_step"
+	    android:icon="@drawable/right_end"
+	    android:showAsAction="always"/>
+    
 </menu>

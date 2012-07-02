@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent" >
+    
+	<ScrollView
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent">
+    	
+		<RelativeLayout 
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent">
+    		
+		    <TextView android:id="@+id/recepy_title"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:textSize="25dp"
+		        android:layout_alignParentTop="true"
+		        android:textColor="#6f6f6f"
+		        android:textStyle="bold"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginBottom="5dp"
+		        android:paddingLeft="15dp"
+				android:paddingRight="15dp"/>
+    
+		   <ImageView
+		       android:id="@+id/picture"
+		       android:layout_width="300dp"
+		       android:layout_height="200dp"
+		       android:layout_below="@+id/recepy_title"
+		       android:layout_centerHorizontal="true"/>
+   
+		   <RelativeLayout 
+		        android:id="@+id/under_picture_layout"
+			    android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+			    android:layout_below="@+id/picture"
+			    android:paddingLeft="10dp"
+				android:paddingRight="10dp">
+	    
+		       
+		       
+			    <RelativeLayout 
+			        android:id="@+id/rl"
+				    android:layout_width="130dp"
+				    android:layout_height="wrap_content"
+				    android:layout_marginTop="16dp">
+	     
+				    <ImageView android:id="@+id/icon_little1"
+			         	android:layout_width="28dp"
+			            android:layout_height="28dp" 
+			            android:src="@drawable/cooked_dishes"
+			            android:layout_alignParentLeft="true"/>
+	     
+				    <TextView android:id="@+id/txtTitle1"
+					    android:layout_width="wrap_content"
+			            android:layout_height="wrap_content" 
+			            android:layout_toRightOf="@id/icon_little1"
+				        android:textStyle="normal"
+				        android:textColor="#000000" 
+				        android:textSize="22dp"
+				        android:text="32"/>
+	     
+				    <ImageView android:id="@+id/icon_little2"
+			         	android:layout_width="28dp"
+			            android:layout_height="28dp" 
+			            android:src="@drawable/rating"
+			            android:layout_alignParentRight="true"/>
+	     
+				    <TextView android:id="@+id/txtTitle2"
+				        android:layout_width="wrap_content"
+			            android:layout_height="wrap_content" 
+			            android:layout_toLeftOf="@id/icon_little2"
+				        android:textStyle="normal"
+				        android:textColor="#000000" 
+				        android:textSize="22dp"
+				        android:text="2"/>
+				    
+     			</RelativeLayout>
+     	
+			    
+			    <Button
+			        android:id="@+id/add_button"
+			        android:layout_width="wrap_content"
+     				android:layout_height="30dp"
+     				android:layout_marginTop="16dp"
+			        style="@style/FavoritesButton"
+			        android:layout_alignParentRight="true"
+			        android:visibility="gone"
+			        android:text="@string/add_to_favorites"/>
+			    
+			    <Button
+			        android:id="@+id/remove_button"
+			        android:layout_width="wrap_content"
+     				android:layout_height="30dp"
+     				android:layout_marginTop="16dp"
+			        style="@style/RemoveFavoritesButton"
+			        android:layout_alignParentRight="true"
+			        android:visibility="gone"
+			        android:text="@string/remove_from_favorites"/>
+			    
+			    <ProgressBar
+			        android:id="@+id/progressbar_recipe"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="12dp"
+			        android:layout_alignParentRight="true"
+			        android:layout_gravity="center_horizontal"/>
+			    	
+			   
+	        	<ImageView 
+	        	    android:id="@+id/line"
+	        	    android:layout_marginTop="16dp"
+	        	    android:layout_width="fill_parent"
+     				android:layout_height="wrap_content"
+     				android:src="@drawable/line_long"
+     				android:layout_below="@+id/rl"
+	        	    />
+	        	
+     
+		       <TextView android:id="@+id/user"
+			       android:layout_width="wrap_content"
+			       android:layout_height="wrap_content"
+			       android:textSize="22dp"
+			       android:layout_marginTop="16dp"
+			       android:layout_below="@+id/rl"
+			       android:textColor="#6f6f6f"
+			       android:text="@string/author"/> 
+        
+			   <TextView android:id="@+id/author_name"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+			        android:textSize="22dp"
+			        android:layout_marginTop="16dp"
+			        android:textColor="#000000"
+			        android:paddingLeft="3dp"
+			        android:layout_toRightOf="@+id/user"
+			        android:layout_below="@+id/rl"/> 
+        
+			    <TextView android:id="@+id/about"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textSize="24dp"
+			        android:layout_marginTop="10dp"
+			        android:textColor="#6f6f6f"
+			        android:textStyle="bold"
+			        android:layout_below="@+id/user"
+			        android:text="@string/about"/> 
+        
+			    <TextView android:id="@+id/recepy_description"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textSize="22dp"
+			        android:textColor="#000000"
+			        android:paddingTop="2dp"
+			        android:layout_below="@+id/about"/> 
+			        
+     		</RelativeLayout>
+
+	    
+ 
+		</RelativeLayout>
+	</ScrollView>
+	
+	<Button android:id="@+id/delete_button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Delete"
+           android:visibility="gone"
+           android:layout_alignParentBottom="true"
+           android:onClick="onClick"/>
+	
+	<Button android:id="@+id/add_button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Add"
+           android:visibility="gone"
+           android:layout_alignParentBottom="true"
+           android:onClick="onClick"/>
+	 
+</RelativeLayout>

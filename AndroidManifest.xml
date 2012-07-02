@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.st.nyam"
+    android:installLocation="preferExternal"
     android:versionCode="1"
     android:versionName="1.0" >
     
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="14"/>
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="14"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
     <application
-        android:icon="@drawable/logo"
+   		android:icon="@drawable/logo"
         android:label="@string/app_name" 
         android:name="NyamApplication"
         android:theme="@style/Theme.NyamTheme">
@@ -19,6 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.DashboardActivity">
+        </activity>
+        <activity android:name=".activities.TestActivity">
         </activity>
         <activity
             android:name=".activities.MainListActivity"
@@ -33,8 +39,29 @@
          <activity 
 	         android:name=".activities.RecipeActivity" >
          </activity>
+         <activity 
+	         android:name=".activities.MainCategoryActivity" >
+         </activity>
         <activity 
 	        android:name=".activities.StepActivity" >
         </activity>
+        <activity android:theme="@android:style/Theme.Dialog" 
+	        android:name=".activities.DialogActivity" >
+        </activity>
+        <activity android:theme="@style/Theme.NyamTheme"
+	        android:name=".activities.ExpandableCategoriesActivity" >
+        </activity>
+        
+        <service android:name=".services.SynchronizeService" />
+        <service android:name=".services.ConstantSynchronizationService" />
+       
+
+        
+   
+        <receiver android:name=".broadcast_receivers.SyncBroadcastReceier" android:enabled="true" android:exported="false">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />  
+			</intent-filter>
+		</receiver>
     </application>
 </manifest>

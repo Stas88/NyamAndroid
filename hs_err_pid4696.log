@@ -1,0 +1,112 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (classFileParser.cpp:3470), pid=4696, tid=3820
+#  Error: ShouldNotReachHere()
+#
+# JRE version: 7.0_01-b08
+# Java VM: Java HotSpot(TM) Client VM (21.1-b02 mixed mode windows-x86 )
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00aba000):  JavaThread "Unknown thread" [_thread_in_vm, id=3820, stack(0x00b20000,0x00b70000)]
+
+Stack: [0x00b20000,0x00b70000],  sp=0x00b6ef10,  free space=315k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x1630e1]
+V  [jvm.dll+0x15dcfb]
+V  [jvm.dll+0x18e37]
+V  [jvm.dll+0x1a6a8]
+V  [jvm.dll+0x2a42f]
+V  [jvm.dll+0x2b818]
+V  [jvm.dll+0x2bedb]
+V  [jvm.dll+0x2bf2a]
+V  [jvm.dll+0x2c07d]
+V  [jvm.dll+0x2c15a]
+V  [jvm.dll+0x2c3d7]
+V  [jvm.dll+0x73cb1]
+V  [jvm.dll+0x7406b]
+V  [jvm.dll+0x121a7c]
+V  [jvm.dll+0x14382a]
+V  [jvm.dll+0xa2940]
+C  [javaw.exe+0x1359]
+C  [javaw.exe+0x1dc9]
+C  [javaw.exe+0xa0cb]
+C  [javaw.exe+0xa155]
+C  [kernel32.dll+0x51174]  BaseThreadInitThunk+0x12
+C  [ntdll.dll+0x5b3f5]  RtlInitializeExceptionChain+0x63
+C  [ntdll.dll+0x5b3c8]  RtlInitializeExceptionChain+0x36
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x00aba000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=3820, stack(0x00b20000,0x00b70000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x00ca0000 - 0x00ccf000 	C:\Program Files\Java\jre7\bin\javaw.exe
+0x77170000 - 0x772ac000 	C:\Windows\SYSTEM32\ntdll.dll
+0x76620000 - 0x766f4000 	C:\Windows\system32\kernel32.dll
+0x75370000 - 0x753ba000 	C:\Windows\system32\KERNELBASE.dll
+0x76d50000 - 0x76df0000 	C:\Windows\system32\ADVAPI32.dll
+0x76ca0000 - 0x76d4c000 	C:\Windows\system32\msvcrt.dll
+0x755f0000 - 0x75609000 	C:\Windows\SYSTEM32\sechost.dll
+0x75920000 - 0x759c1000 	C:\Windows\system32\RPCRT4.dll
+0x75710000 - 0x757d9000 	C:\Windows\system32\USER32.dll
+0x76c50000 - 0x76c9e000 	C:\Windows\system32\GDI32.dll
+0x757e0000 - 0x757ea000 	C:\Windows\system32\LPK.dll
+0x77300000 - 0x7739d000 	C:\Windows\system32\USP10.dll
+0x74120000 - 0x742be000 	C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7600.16385_none_421189da2b7fabfc\COMCTL32.dll
+0x76f70000 - 0x76fc7000 	C:\Windows\system32\SHLWAPI.dll
+0x772b0000 - 0x772cf000 	C:\Windows\system32\IMM32.DLL
+0x757f0000 - 0x758bc000 	C:\Windows\system32\MSCTF.dll
+0x6a6e0000 - 0x6a79e000 	C:\Program Files\Java\jre7\bin\msvcr100.dll
+0x60120000 - 0x60441000 	C:\Program Files\Java\jre7\bin\client\jvm.dll
+0x71560000 - 0x71567000 	C:\Windows\system32\WSOCK32.dll
+0x76f30000 - 0x76f65000 	C:\Windows\system32\WS2_32.dll
+0x772e0000 - 0x772e6000 	C:\Windows\system32\NSI.dll
+0x73660000 - 0x73692000 	C:\Windows\system32\WINMM.dll
+0x772d0000 - 0x772d5000 	C:\Windows\system32\PSAPI.DLL
+0x60550000 - 0x6055c000 	C:\Program Files\Java\jre7\bin\verify.dll
+0x60100000 - 0x60120000 	C:\Program Files\Java\jre7\bin\java.dll
+0x600e0000 - 0x600f3000 	C:\Program Files\Java\jre7\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1251 -Xbootclasspath:C:\Program Files\Android\android-sdk\platforms\android-15\android.jar 
+java_command: org.codehaus.jackson.smile.Tool
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+CLASSPATH=C:\Program Files\Java\jdk1.7.0_01\lib
+PATH=C:/Program Files/Java/jre7/bin/client;C:/Program Files/Java/jre7/bin;C:/Program Files/Java/jre7/lib/i386;C:\Program Files\AMD APP\bin\x86;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\TortoiseGit\bin;C:\Program Files\Git\cmd;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Android\android-sdk\platform-tools;D:\play-2.0\play-2.0;C:\Program Files\Java\jdk1.7.0_01\bin;C:\Users\Богдан\Downloads\eclipse-jee-indigo-SR1-win32\eclipse;
+USERNAME=Богдан
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 15 Model 4 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7600 
+
+CPU:total 2 (1 cores per cpu, 2 threads per core) family 15 model 4 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ht
+
+Memory: 4k page, physical 3144952k(884388k free), swap 6286028k(3313948k free)
+
+vm_info: Java HotSpot(TM) Client VM (21.1-b02) for windows-x86 JRE (1.7.0_01-b08), built on Oct  3 2011 02:11:36 by "java_re" with unknown MS VC++:1600
+
+time: Sat May 19 17:51:31 2012
+elapsed time: 0 seconds
+

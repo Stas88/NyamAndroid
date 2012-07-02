@@ -6,4 +6,8 @@
 	    android:showAsAction="ifRoom"
 	    android:actionViewClass="android.widget.SearchView" 
 	    android:title="@string/search"/>
+    
+    <item android:id="@+id/catalog"
+	    android:icon="@drawable/catalog_andrey"
+	    android:showAsAction="ifRoom"/>
 </menu>
