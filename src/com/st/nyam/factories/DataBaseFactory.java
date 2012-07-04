@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -47,6 +48,8 @@ public class DataBaseFactory   {
 	private final String INSERT_RECIPE = "INSERT INTO recipes ('id', 'title', 'description', 'user_id', 'favorites_by', 'main_photo_file_name', 'rating', 'cooked_dishes_count', 'path') VALUES (?,?,?,?,?,?,?,?,?) ";
 	private final String DELETE_RECIPE = "DELETE FROM recipes WHERE id = ?";
 	private final String DELETE_STEPS_BY_RECIPEID = "DELETE FROM steps WHERE recipe_id = ?";
+	private final String UPDATE_RECIPE_ITEM_ID = "UPDATE recipes SET item_id = ?  WHERE id = ?";
+	
 	
 	private final String SELECT_MAINCATEGORIES = "SELECT * FROM main_categories WHERE parent_id = ?";
 	private final String SELECT_MAINCATEGORIES_BY_NAME = "SELECT * FROM main_categories WHERE name = ?";
@@ -314,6 +317,14 @@ public class DataBaseFactory   {
 	
 	public  void endTransaction() {
 		db.endTransaction();
+	}
+	
+	public void insertItemId(int recipeId, int itemId) {
+		if (isRecipeExists(recipeId)) { 
+			Log.d(TAG, "insertItemId = " + itemId);
+			db.execSQL(UPDATE_RECIPE_ITEM_ID ,new String[] { Integer.toString(itemId),
+					Integer.toString(recipeId)});
+		}
 	}
 	/*
 	 * public void putRecepy(Recepy recepy) { db.execSQL(INSERT_RECEPY, new

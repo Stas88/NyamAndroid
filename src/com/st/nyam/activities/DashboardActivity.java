@@ -105,8 +105,9 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 				Log.d(TAG, "Add button pressed Network eavailable");
 				if (NyamApplication.isPasswordExists()) {
 					Log.d(TAG, "application.isPasswordExists(): " + application.isPasswordExists());
-					Log.d(TAG, "Pressed save to favorites password exists");
-					//Open ProfileActivity
+					Log.d(TAG, "Pressed go to Profile");
+					Intent profileIntent = new Intent(this,ProfileActivity.class);
+					startActivity(profileIntent);
 				}
 				else {
 					showDialog();
@@ -114,7 +115,6 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 			} else {
 				showDialog(Constants.DAILOG_INTERNET_UNAVAILABLE);
 			}
-			showDialog();
 			break;
 		case R.id.home_btn_feature3:
 			/*
@@ -186,6 +186,7 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 		protected void onPostExecute(Boolean result) {
 			if (result) {
 				if (editNameDialog != null) {
+					
 					editNameDialog.dismiss();
 				}
 			} else {

@@ -193,9 +193,9 @@ public class HttpFactory  {
 		return false;
 	}
 
-	public static void sendAddToFavorites(Context context, int recipeId) throws JSONException {
+	public static int sendAddToFavorites(Context context, int recipeId) throws JSONException {
 		String result = null;
-		
+		int item_id = -1;
 		try {
 			//Tokens
 			if (isLoginned()) {
@@ -219,6 +219,9 @@ public class HttpFactory  {
 					result = HttpFactory
 							.convertStreamToString(entity2.getContent());
 					Log.d(TAG, "Entity: " + result);
+					JSONObject object = new JSONObject(result);
+					item_id = object.getInt("item_id");
+					Log.d(TAG, "item_id: " + item_id);
 				}
 			} else {
 				Log.d(TAG, "Not isLoginned()");
@@ -228,19 +231,18 @@ public class HttpFactory  {
 		} catch (IOException e) {
 			Log.d(TAG, "Connection failed; " + e.getMessage());
 		}
+		return item_id;
 	}
 	
 	
 	
-	public static void sendDeleteFromFavorites(Context context, String path) throws JSONException {
+	public static void sendDeleteFromFavorites(Context context, int itemId) throws JSONException {
 		String result = null;
 		try {
 			if (isLoginned()) {
 				// Deleting from favorites
-				HttpDeleteWithBody httdelete = new HttpDeleteWithBody(Constants.URL + path + "/"  
-						+ Constants.DELETE_FROM_FAVORITES);
-				Log.d(TAG, "Delete Statement: " + Constants.URL + path + "/"  
-						+ Constants.DELETE_FROM_FAVORITES);
+				HttpDeleteWithBody httdelete = new HttpDeleteWithBody(Constants.URL + "/items/" + itemId);
+				Log.d(TAG, "Delete Statement: " + Constants.URL + "/items/" + itemId);
 
 				List<NameValuePair> nvps1 = new ArrayList<NameValuePair>();
 				nvps1.add(new BasicNameValuePair(HttpFactory.token_name, HttpFactory.token_value));
@@ -395,7 +397,7 @@ public class HttpFactory  {
         HttpEntity entity2 = response2.getEntity();
 
         Log.d(TAG, "Login form get2: " + response2.getStatusLine());
-        Log.d(TAG, "Entity2: " +  entity2.toString());
+        Log.d(TAG, "Recipes sync: " +  entity2.toString());
      
         if (entity2 != null) {
             result = HttpFactory.convertStreamToString(entity2.getContent());

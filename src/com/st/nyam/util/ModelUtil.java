@@ -188,12 +188,42 @@ public class ModelUtil {
 		recipe.setCooked_dishes_count(object.getInt("cooked_dishes_count"));
 		Log.d(TAG, "img_url = " + object.getString("img_url"));
 		recipe.setImg_url(object.getString("img_url"));
-		Log.d(TAG, "img_url = " + object.getString("img_url"));
-		recipe.setImg_url(object.getString("img_url"));
 		Log.d(TAG, "path = " + object.getString("path"));
 		recipe.setPath(object.getString("path"));
 		return recipe;
 	}
+	
+	
+	public static Recipe getRecipeFromJSONItem_id(JSONObject object)
+			throws JSONException {
+		Recipe recipe = new Recipe();
+		Log.d(TAG, "getRecipeFromJSON() object = " + object.toString());
+		Log.d(TAG, "id = " + object.getInt("id"));
+		recipe.setId(object.getInt("id"));
+		Log.d(TAG, "title = " + object.getString("title"));
+		recipe.setTitle(object.getString("title"));
+		Log.d(TAG, "description = " + object.getString("description"));
+		recipe.setDescription(object.getString("description"));
+		JSONObject jsonObject = object.getJSONObject("user");
+		String user = jsonObject.getString("nick");
+		Log.d(TAG, "user = " + user);
+		recipe.setUser(user);
+		Log.d(TAG, "favorites_by = " + object.getInt("favorites_by"));
+		recipe.setFavorites_by(object.getInt("favorites_by"));
+		Log.d(TAG, "rating = " + object.getInt("rating"));
+		recipe.setRating(object.getInt("rating"));
+		Log.d(TAG, "cooked_dishes_count = " + object.getInt("cooked_dishes_count"));
+		recipe.setCooked_dishes_count(object.getInt("cooked_dishes_count"));
+		Log.d(TAG, "img_url = " + object.getString("img_url"));
+		recipe.setImg_url(object.getString("img_url"));
+		Log.d(TAG, "path = " + object.getString("path"));
+		recipe.setPath(object.getString("path"));
+		Log.d(TAG, "item_id = " + object.getInt("item_id"));
+		recipe.setItem_id(object.getInt("item_id"));
+		return recipe;
+	}
+	
+	
 
 	public static Step getStepFromJSON(JSONObject object) throws JSONException {
 		Step step = new Step();
@@ -216,7 +246,7 @@ public class ModelUtil {
 			Log.d(TAG, "In MainListActivity getRecipes(): " + jsonElements);
 			Log.d(TAG, "jsonElements.length(): " + jsonElements.length());
 			for (int i = 0; i < jsonElements.length(); i++) {
-				Recipe favRecipe = (ModelUtil.getRecipeFromJSON(jsonElements.getJSONObject(i)));
+				Recipe favRecipe = (ModelUtil.getRecipeFromJSONItem_id(jsonElements.getJSONObject(i)));
 				
 				Log.d(TAG, "Recipe: " + jsonElements.getJSONObject(i));
 				

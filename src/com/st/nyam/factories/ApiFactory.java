@@ -53,16 +53,16 @@ public class ApiFactory {
 	
 	public static Recipe getRecipe(Context context, String URL) throws JSONException {
 		JSONObject object = JsonFactory.getJsonObjectFromUrl(URL, context);
+		Recipe recipe = null;
+		if (object != null) {
 		Log.d(TAG, "object = " + object.toString());
-		Recipe recipe = ModelUtil.getRecipeFromJSON(object);
+		recipe = ModelUtil.getRecipeFromJSON(object);
 		Log.d(TAG, "recipe = " + recipe.toString());
+		}
 		return recipe;
 	}
 	
-	public static boolean isAddedToFavorites(Context context, int parentId) throws JSONException, ParseException {
-		HttpFactory.sendAddToFavorites(context,parentId);
-		return false;
-	}
+
 	
 	
 

@@ -98,6 +98,7 @@ public class SynchronizeService extends IntentService {
 		    		idsParams.append("&ids[]=" + knownRecipes.get(i).getId());
 		    	}
 		    	result = HttpFactory.getSyncJSONRecipes(idsParams.toString());
+		    	Log.d(TAG, "list of recipes sync = " +  result);
 		    	resultList = ModelUtil.getRecipesFromJSONString(result);
 		    	Log.d(TAG, "AsyncLogin 2");
 		    	if (resultList != null && !resultList.isEmpty()) {

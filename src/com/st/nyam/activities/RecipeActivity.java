@@ -118,8 +118,6 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 			Log.d(TAG, "picture : " + picture);
 			//Implement creating new button (delete) if this is View.gone
 			
-			
-			
 			if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
 				Log.d(TAG, "Recipe favorites");
 				//Button delete_button = (Button)findViewById(R.id.delete_button);
@@ -323,9 +321,9 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 			if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
 				Log.d(TAG, "Delete button pressed");
 				db.deleteRecipeFromFavorites((Recipe)recipeGeneral);
-				Object[] params = new Object[] {this, recipeGeneral.getPath()};
+				Object[] params = new Object[] {this, recipeGeneral.getItem_id()};
 				Log.d(TAG, "recipeGeneral.getPath(): " + recipeGeneral.getPath());
-				Log.d(TAG, "recipeGeneral.getPath(): " + recipeGeneral.getId());
+				Log.d(TAG, "recipeGeneral.getPath(): " + recipeGeneral.getItem_id());
 				new DeleteFromFavorites().execute(params);
 				Intent intent = getIntent();
 				intent.putExtra("deletedRecipe", recipeGeneral);
@@ -341,7 +339,8 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					if (NyamApplication.isPasswordExists()) {
 						Log.d(TAG, "Delete button pressed Password exist");
 						db.deleteRecipeFromFavorites((Recipe)recipe);
-						Object[] params = new Object[] {this, recipeGeneral.getPath()};
+						Object[] params = new Object[] {this, recipeGeneral.getItem_id()};
+						Log.d(TAG, "recipeGeneral.getItem_id() = " + recipeGeneral.getItem_id());
 						new DeleteFromFavorites().execute(params);
 						changeIntoAddButton();
 						Intent intent = getIntent();
@@ -603,7 +602,7 @@ private class DownloadImageStepTask extends AsyncTask<Object,Void,Object[]> {
 		protected Boolean doInBackground(Object... params) {
 			Boolean isAdded = false;
 			try {
-				HttpFactory.sendAddToFavorites((Context) params[0],(Integer)params[1]);
+				db.insertItemId((Integer)params[1], HttpFactory.sendAddToFavorites((Context) params[0],(Integer)params[1]));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -618,7 +617,7 @@ private class DownloadImageStepTask extends AsyncTask<Object,Void,Object[]> {
 		protected Boolean doInBackground(Object... params) {
 			Boolean isAdded = null;
 			try {
-				HttpFactory.sendDeleteFromFavorites((Context) params[0], (String)params[1]);
+				HttpFactory.sendDeleteFromFavorites((Context) params[0], (Integer)params[1]);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
