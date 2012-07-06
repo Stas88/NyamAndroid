@@ -73,7 +73,7 @@ public class SynchronizeService extends IntentService {
 			Log.d(TAG, "SynchronizeService password: " + password);
 	        Log.d(TAG, "onHandleIntent 3");
 	        if (HttpFactory.isNetworkAvailable(this)) {
-		        ArrayList<RecipeGeneral> recipes =  getSyncRecipes(knownRecipes);
+		        ArrayList<RecipeGeneral> recipes = getSyncRecipes(knownRecipes);
 		        Log.d(TAG, "onHandleIntent 4");
 		        Bundle resultData = new Bundle();
 		        resultData.putSerializable("recipes_from_server", recipes);
@@ -100,6 +100,7 @@ public class SynchronizeService extends IntentService {
 		    	result = HttpFactory.getSyncJSONRecipes(idsParams.toString());
 		    	Log.d(TAG, "list of recipes sync = " +  result);
 		    	resultList = ModelUtil.getRecipesFromJSONString(result);
+		    	
 		    	Log.d(TAG, "AsyncLogin 2");
 		    	if (resultList != null && !resultList.isEmpty()) {
 		    		Log.d(TAG, "AsyncLogin 3");
@@ -117,6 +118,17 @@ public class SynchronizeService extends IntentService {
 		    	} else {
 		    		Log.d(TAG, "Not isLoginned()");
 		    	}
+	    	    List<Integer> ids_to_delete = ModelUtil.getListToDelete(result);
+	    	    if (ids_to_delete != null && !ids_to_delete.isEmpty()) {
+	    	    	for(Integer i : ids_to_delete) {
+	    	    		Log.d(TAG, "Deleted recipe id: " + i);
+	    	    		Recipe recipe = db.getRecipeById(i);
+	    	    		if (recipe != null) {
+	    	    			Log.d(TAG, "Deleting recipe: ");
+	    	    			db.deleteRecipeFromFavorites(recipe);
+	    	    		}
+	    	    	}
+	    	    }
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			receiver.send(Constants.AUTHORIZATION_NOT_PASSED, null);

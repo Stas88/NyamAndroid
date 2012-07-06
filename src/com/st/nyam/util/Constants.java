@@ -5,6 +5,7 @@ import android.content.Intent;
 public class Constants {
 	
 	public final static String URL = "http://192.168.11.150:3001";
+	public final static String Profile_URL = "http://192.168.11.150:3001/my";
 	public final static String URL_MY = "http://192.168.11.150:3001";
 	public final static String URL_RECIPES = "http://192.168.11.150:3001/recipes";
 	public final static String JSON = ".json";

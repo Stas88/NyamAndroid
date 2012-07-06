@@ -509,8 +509,10 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 					}
 	        	}
 	        	setResult(RESULT_OK);
+	        	
 	        	Log.d(TAG, "onReceiveResult  RESULT_OK");
 	        	Log.d(TAG, "onReceiveResult 2");
+	        	onRestart();
 	        	return;
 	        }
 	        if (resultCode == Constants.AUTHORIZATION_NOT_PASSED) {

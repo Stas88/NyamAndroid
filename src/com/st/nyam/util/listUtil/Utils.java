@@ -1,7 +1,6 @@
 package com.st.nyam.util.listUtil;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 public class Utils {
     public static void CopyStream(InputStream is, OutputStream os)

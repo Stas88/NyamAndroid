@@ -61,7 +61,7 @@ public class HttpFactory  {
 		String result = null;
 		// Create the httpclient
 		if (isNetworkAvailable(context)) {
-			DefaultHttpClient httpclient = new DefaultHttpClient();
+		
 			// Prepare a request object
 			Log.d(TAG, "REQUEST: " + url);
 			HttpGet httpGet = new HttpGet(url);
@@ -246,7 +246,7 @@ public class HttpFactory  {
 
 				List<NameValuePair> nvps1 = new ArrayList<NameValuePair>();
 				nvps1.add(new BasicNameValuePair(HttpFactory.token_name, HttpFactory.token_value));
-
+				
 				httdelete.setEntity(new UrlEncodedFormEntity(nvps1, HTTP.UTF_8));
 				httdelete.setHeader("Accept", "application/json");
 				HttpResponse response2 = httpclient.execute(httdelete);
@@ -310,6 +310,8 @@ public class HttpFactory  {
 	
 		nvps.add(new BasicNameValuePair("user[email]", NyamApplication.getLogin()));
 		nvps.add(new BasicNameValuePair("user[password]", NyamApplication.getPassword()));
+		//nvps.add(new BasicNameValuePair("user[remember_me]", "1"));
+		nvps.add(new BasicNameValuePair(HttpFactory.token_name, HttpFactory.token_value));
 		nvps.add(new BasicNameValuePair(HttpFactory.token_name, HttpFactory.token_value));
 
 		httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
@@ -392,7 +394,7 @@ public class HttpFactory  {
         Log.d(TAG, "Request line: " + httpget2.getRequestLine());
         Log.d(TAG, "Request params: " + httpget2.getParams());
         Log.d(TAG, "Request uri: " + httpget2.getURI());
-        
+        Log.d(TAG, "idsParams: " + idsParams);
         HttpResponse response2 = httpclient.execute(httpget2);
         HttpEntity entity2 = response2.getEntity();
 
@@ -406,7 +408,56 @@ public class HttpFactory  {
 		return result;
 	}
 	
-	 
+	 public static String getProfileString() throws IllegalStateException, JSONException {
+		 String result = null;
+				try {
+					isLoginned();
+					//setUpTokens();
+				  Log.d(TAG, "getProfileString: " +  1);
+				// Deleting from favorites
+				// Prepare a request object
+				HttpGet httpGet = new HttpGet(Constants.Profile_URL + Constants.JSON);
+				// Execute the request
+				HttpResponse response;
+				Log.d(TAG, "getProfileString: " +  2);
+				try {
+					// Open the webpage.
+					response = httpclient.execute(httpGet);
+					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
+						Log.d(TAG, "getProfileString: " +  3);
+						// Connection was established. Get the content.
+						HttpEntity entity = response.getEntity();
+						// If the response does not enclose an entity, there is no
+						// need
+						// to worry about connection release
+						Log.d(TAG, "getProfileString: " +  4);
+						if (entity != null) {
+							// A Simple JSON Response Read
+							InputStream instream = entity.getContent();
+							// Load the requested page converted to a string into a
+							// JSONObject.
+							Log.d(TAG, "getProfileString: " +  5);
+							result = HttpFactory.convertStreamToString(instream);
+							Log.d(TAG, "RESPONSE: " + result);
+							// Cose the stream.
+							instream.close();
+						}
+						Log.d(TAG, "getProfileString: " +  6);
+					} else {
+						Log.d(TAG,
+								"Unable to load page - " + response.getStatusLine());
+					}
+				} catch (ClientProtocolException e) {
+					Log.d(TAG, "Connection failed; " + e.getMessage());
+				} catch (IOException e) {
+					Log.d(TAG, "Connection failed; " + e.getMessage());
+				}	
+			
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return result;
+	 }
 	 
 
 	

@@ -10,10 +10,10 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
+import com.st.nyam.models.Profile;
 import com.st.nyam.models.Recipe;
 import com.st.nyam.models.RecipeGeneral;
 import com.st.nyam.models.Step;
-import com.st.nyam.util.Constants;
 import com.st.nyam.util.ModelUtil;
 
 
@@ -60,6 +60,17 @@ public class ApiFactory {
 		Log.d(TAG, "recipe = " + recipe.toString());
 		}
 		return recipe;
+	}
+	
+	public static Profile getProfile() throws JSONException {
+		Profile profile = null;
+		JSONObject object = JsonFactory.getProfileFromUrl();
+		if (object != null) {
+			Log.d(TAG, "object = " + object.toString());
+			profile = ModelUtil.getProfileFromJSON(object);
+			Log.d(TAG, "profile = " + profile.toString());
+		}
+		return profile;
 	}
 	
 

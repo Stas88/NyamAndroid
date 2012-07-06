@@ -2,6 +2,7 @@ package com.st.nyam.util;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +12,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.st.nyam.models.MainCategory;
+import com.st.nyam.models.Profile;
 import com.st.nyam.models.Recipe;
 import com.st.nyam.models.RecipeGeneral;
 import com.st.nyam.models.Step;
@@ -18,64 +20,75 @@ import com.st.nyam.models.Step;
 public class ModelUtil {
 
 	private final static String TAG = "ModelUtil";
+	
+	public static Profile getProfileFromJSON(JSONObject object) throws JSONException {
+		Profile profile = new Profile();
+		Log.d(TAG, "object = " + object.toString());
+		
+		Log.d(TAG, "img_path = " + object.getString("avatar"));
+		profile.setImg_path(object.getString("avatar"));
+		Log.d(TAG, "name = " + object.getString("nick"));
+		profile.setName(object.getString("nick"));
+		Log.d(TAG, "level = " + object.getString("level"));
+		profile.setLevel(object.getString("level"));
+		Log.d(TAG, "favorite_dishes = " + object.getString("favorite_kitchen_list"));
+		profile.setFavorite_dishes(object.getString("favorite_kitchen_list"));
+		Log.d(TAG, "hobbies = " + object.getString("hobby_list"));
+		profile.setHobbies(object.getString("hobby_list"));
+		Log.d(TAG, "interests = " + object.getString("cook_interest_list"));
+		profile.setInterests(object.getString("cook_interest_list"));
+		Log.d(TAG, "experience = " + object.getString("experience"));
+		profile.setExperience(object.getString("experience"));
+		Log.d(TAG, "about = " + object.getString("about"));
+		profile.setAbout(object.getString("about"));
+		
+		Log.d(TAG, "published_recepies = " + object.getInt("recipes_count"));
+		profile.setPublished_recepies(object.getInt("recipes_count"));
+		Log.d(TAG, "added_to_favorites = " + object.getInt("favorites_count"));
+		profile.setAdded_to_favorites(object.getInt("favorites_count"));
+		Log.d(TAG, "added_to_favorites = " + object.getInt("favorites_count"));
+		profile.setAdded_to_favorites(object.getInt("favorites_count"));
+		Log.d(TAG, "comments_left = " + object.getInt("comment_count"));
+		profile.setComments_left(object.getInt("comment_count"));
+		Log.d(TAG, "voices_left = " + object.getInt("ratings_count"));
+		profile.setVoices_left(object.getInt("ratings_count"));
+		Log.d(TAG, "friends = " + object.getInt("friends_count"));
+		profile.setFriends(object.getInt("friends_count"));
+		return profile;
+	}
 
-	/*
-	 * public static Recipe getRecipeFromCursor(Cursor c) throws ParseException
-	 * { Recipe recipe = new Recipe();
-	 * recipe.setId(c.getInt(c.getColumnIndex("id")));
-	 * recipe.setTitle(c.getString(c.getColumnIndex("title")));
-	 * recipe.setDescription(c.getString(c.getColumnIndex("description")));
-	 * recipe.setCook_time(c.getInt(c.getColumnIndex("cook_time")));
-	 * recipe.setServ_num(c.getInt(c.getColumnIndex("serv_num")));
-	 * recipe.setUser_id(c.getInt(c.getColumnIndex("user_id"))); if
-	 * (c.getString(c.getColumnIndex("created_at")) != null) {
-	 * recipe.setCreated_at(new
-	 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(c.getString
-	 * (c.getColumnIndex("created_at")))); } if
-	 * (c.getString(c.getColumnIndex("updated_at")) != null) {
-	 * recipe.setUpdated_at(new
-	 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(c.getString
-	 * (c.getColumnIndex("updated_at")))); }
-	 * recipe.setMain_photo_file_name(c.getString
-	 * (c.getColumnIndex("main_photo_file_name")));
-	 * recipe.setMain_photo_content_type
-	 * (c.getString(c.getColumnIndex("main_photo_content_type")));
-	 * recipe.setMain_photo_file_size
-	 * (c.getInt(c.getColumnIndex("main_photo_file_size")));
-	 * recipe.setViews(c.getInt(c.getColumnIndex("views")));
-	 * recipe.setCached_slug(c.getString(c.getColumnIndex("cached_slug")));
-	 * recipe.setDelta(c.getInt(c.getColumnIndex("delta")));
-	 * recipe.setMain_category_id
-	 * (c.getInt(c.getColumnIndex("main_category_id")));
-	 * recipe.setStatus(c.getInt(c.getColumnIndex("status")));
-	 * recipe.setMain_photo_processing
-	 * (c.getInt(c.getColumnIndex("main_photo_processing")));
-	 * recipe.setHide_watermark_text
-	 * (c.getInt(c.getColumnIndex("hide_watermark_text")));
-	 * recipe.setVk_comments_count
-	 * (c.getInt(c.getColumnIndex("vk_comments_count")));
-	 * recipe.setTitle2_genitive
-	 * (c.getString(c.getColumnIndex("title2_genitive")));
-	 * recipe.setPublication_on_main
-	 * (c.getInt(c.getColumnIndex("publication_on_main"))); if
-	 * (c.getString(c.getColumnIndex("publication_on_main_date")) != null) {
-	 * recipe.setPublication_on_main_date(new
-	 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss"
-	 * ).parse(c.getString(c.getColumnIndex("publication_on_main_date")))); }
-	 * recipe
-	 * .setRecipe_variation_id(c.getInt(c.getColumnIndex("recipe_variation_id"
-	 * )));
-	 * recipe.setParent_variation_id(c.getInt(c.getColumnIndex("parent_variation_id"
-	 * )));
-	 * recipe.setVk_likes_count(c.getInt(c.getColumnIndex("vk_likes_count")));
-	 * recipe
-	 * .setGoogle_plus_count(c.getInt(c.getColumnIndex("google_plus_count")));
-	 * recipe
-	 * .setFacebook_likes_count(c.getInt(c.getColumnIndex("facebook_likes_count"
-	 * ))); recipe.setTwitter_tweets_count(c.getInt(c.getColumnIndex(
-	 * "recipe_variation_id"))); return recipe; }
-	 */
-
+	public static Profile getProfileFromCursor(Cursor c) {
+		Profile profile = new Profile();
+		
+		Log.d(TAG, "img_path = " + c.getString(c.getColumnIndex("img_path")));
+		profile.setImg_path(c.getString(c.getColumnIndex("img_path")));
+		Log.d(TAG, "name = " + c.getString(c.getColumnIndex("name")));
+		profile.setName(c.getString(c.getColumnIndex("name")));
+		Log.d(TAG, "level = " + c.getString(c.getColumnIndex("level")));
+		profile.setLevel(c.getString(c.getColumnIndex("level")));
+		Log.d(TAG, "favorite_dishes = " + c.getString(c.getColumnIndex("favorite_dishes")));
+		profile.setFavorite_dishes(c.getString(c.getColumnIndex("favorite_dishes")));
+		Log.d(TAG, "hobbies = " + c.getString(c.getColumnIndex("hobbies")));
+		profile.setHobbies(c.getString(c.getColumnIndex("hobbies")));
+		Log.d(TAG, "interests = " + c.getString(c.getColumnIndex("interests")));
+		profile.setInterests(c.getString(c.getColumnIndex("interests")));
+		Log.d(TAG, "experience = " + c.getString(c.getColumnIndex("experience")));
+		profile.setExperience(c.getString(c.getColumnIndex("experience")));
+		Log.d(TAG, "about = " + c.getString(c.getColumnIndex("about")));
+		profile.setAbout(c.getString(c.getColumnIndex("about")));
+		
+		Log.d(TAG, "published_recepies = " + c.getInt(c.getColumnIndex("published_recepies")));
+		profile.setPublished_recepies(c.getInt(c.getColumnIndex("published_recepies")));
+		Log.d(TAG, "added_to_favorites = " + c.getInt(c.getColumnIndex("added_to_favorites")));
+		profile.setAdded_to_favorites(c.getInt(c.getColumnIndex("added_to_favorites")));
+		Log.d(TAG, "comments_left = " + c.getInt(c.getColumnIndex("comments_left")));
+		profile.setComments_left(c.getInt(c.getColumnIndex("comments_left")));
+		Log.d(TAG, "voices_left = " + c.getInt(c.getColumnIndex("voices_left")));
+		profile.setVoices_left(c.getInt(c.getColumnIndex("voices_left")));
+		Log.d(TAG, "friends = " + c.getInt(c.getColumnIndex("friends")));
+		profile.setFriends(c.getInt(c.getColumnIndex("friends")));
+		return profile;
+	}
 	public static Step getStepFromCursor(Cursor c) throws ParseException {
 		Step step = new Step();
 		step.setNumber(c.getInt(c.getColumnIndex("id")));
@@ -239,13 +252,25 @@ public class ModelUtil {
 		return step;
 	}
 	
+	public static List<Integer> getListToDelete(String result2) throws JSONException {
+		List<Integer> list = new ArrayList<Integer>();
+		JSONArray jsonElements = new JSONArray(result2);
+		JSONObject object = jsonElements.getJSONObject(jsonElements.length()-1);
+		JSONArray ar = object.getJSONArray("deleted");
+		for (int i=0; i<ar.length(); i++) {
+		    list.add(ar.getInt(i));
+		}
+		return list;
+	}
+	
 	public static ArrayList<RecipeGeneral> getRecipesFromJSONString(String result2) {
 		ArrayList<RecipeGeneral> recipes = new ArrayList<RecipeGeneral>();
 		try {
 			JSONArray jsonElements = new JSONArray(result2);
 			Log.d(TAG, "In MainListActivity getRecipes(): " + jsonElements);
 			Log.d(TAG, "jsonElements.length(): " + jsonElements.length());
-			for (int i = 0; i < jsonElements.length(); i++) {
+			for (int i = 0; i < jsonElements.length()-1; i++) {
+				Log.d(TAG, "jsonElements.every: " + jsonElements.getJSONObject(i));
 				Recipe favRecipe = (ModelUtil.getRecipeFromJSONItem_id(jsonElements.getJSONObject(i)));
 				
 				Log.d(TAG, "Recipe: " + jsonElements.getJSONObject(i));
@@ -264,10 +289,11 @@ public class ModelUtil {
 				recipes.add((RecipeGeneral)favRecipe);
 				Log.d(TAG, "In MainListActivity getRecipes() Adding every recipe");
 			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return recipes;
 	}
-
 }

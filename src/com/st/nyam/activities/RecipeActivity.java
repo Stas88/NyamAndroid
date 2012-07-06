@@ -120,7 +120,6 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 			
 			if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
 				Log.d(TAG, "Recipe favorites");
-				//Button delete_button = (Button)findViewById(R.id.delete_button);
 				//delete_button.setVisibility(View.VISIBLE);
 				Bitmap bitmapViewPicture = BitmapFactory.decodeFile(Environment
 						.getExternalStorageDirectory().toString()
@@ -320,10 +319,11 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 		case R.id.remove_button:
 			if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
 				Log.d(TAG, "Delete button pressed");
+				int item_id = db.getItemIdById(recipeGeneral.getId());
 				db.deleteRecipeFromFavorites((Recipe)recipeGeneral);
-				Object[] params = new Object[] {this, recipeGeneral.getItem_id()};
+				Object[] params = new Object[] {this, item_id};
 				Log.d(TAG, "recipeGeneral.getPath(): " + recipeGeneral.getPath());
-				Log.d(TAG, "recipeGeneral.getPath(): " + recipeGeneral.getItem_id());
+				Log.d(TAG, "recipeGeneral.item_id: " + item_id);
 				new DeleteFromFavorites().execute(params);
 				Intent intent = getIntent();
 				intent.putExtra("deletedRecipe", recipeGeneral);
@@ -338,9 +338,10 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					Log.d(TAG, "Delete button pressed Network eavailable");
 					if (NyamApplication.isPasswordExists()) {
 						Log.d(TAG, "Delete button pressed Password exist");
+						int item_id = db.getItemIdById(recipeGeneral.getId());
 						db.deleteRecipeFromFavorites((Recipe)recipe);
-						Object[] params = new Object[] {this, recipeGeneral.getItem_id()};
-						Log.d(TAG, "recipeGeneral.getItem_id() = " + recipeGeneral.getItem_id());
+						Object[] params = new Object[] {this, item_id};
+						Log.d(TAG, "recipeGeneral.item_id : " + item_id);
 						new DeleteFromFavorites().execute(params);
 						changeIntoAddButton();
 						Intent intent = getIntent();
@@ -602,7 +603,10 @@ private class DownloadImageStepTask extends AsyncTask<Object,Void,Object[]> {
 		protected Boolean doInBackground(Object... params) {
 			Boolean isAdded = false;
 			try {
-				db.insertItemId((Integer)params[1], HttpFactory.sendAddToFavorites((Context) params[0],(Integer)params[1]));
+				
+				int item_id = HttpFactory.sendAddToFavorites((Context) params[0],(Integer)params[1]);
+				Log.d(TAG, "AddToFavorites.item_id = " + item_id);
+				db.insertItemId((Integer)params[1], item_id);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -623,7 +627,6 @@ private class DownloadImageStepTask extends AsyncTask<Object,Void,Object[]> {
 			}
 			return isAdded;
 		}
-
 	}
 
 	private class LoginingCheckout extends AsyncTask<String, Void, Boolean> {

@@ -71,8 +71,14 @@ public class JsonFactory {
 			}
 			Log.d(TAG, "jsonString By Name StepsArray: " + jsonResponse.toString());
 		} catch (JSONException ex) {
-			Log.e(TAG, "JSON failed; " + ex.getMessage());
+			Log.d(TAG, "JSON failed; " + ex.getMessage());
 		}
 		return jsonResponse;
+	}
+	
+	public static JSONObject getProfileFromUrl() throws JSONException {
+		String string = HttpFactory.getProfileString();
+		JSONObject object = new JSONObject(string.trim());
+		return object;
 	}
 }
