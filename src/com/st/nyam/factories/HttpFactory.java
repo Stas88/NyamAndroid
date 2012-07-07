@@ -179,8 +179,7 @@ public class HttpFactory  {
 
 	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager conMan = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		//mobile
-		State mobile = conMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
+
 		//wifi
 		State wifi = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
 
@@ -198,7 +197,7 @@ public class HttpFactory  {
 		int item_id = -1;
 		try {
 			//Tokens
-			if (isLoginned()) {
+			
 				Log.d(TAG, "isLoginned()");
 				// Adding to favorites
 				HttpPost httget = new HttpPost(Constants.URL_ADD_TO_FAVORITES
@@ -223,9 +222,7 @@ public class HttpFactory  {
 					item_id = object.getInt("item_id");
 					Log.d(TAG, "item_id: " + item_id);
 				}
-			} else {
-				Log.d(TAG, "Not isLoginned()");
-			}
+			
 		} catch (ClientProtocolException e) {
 			Log.d(TAG, "Connection failed; " + e.getMessage());
 		} catch (IOException e) {
@@ -239,7 +236,7 @@ public class HttpFactory  {
 	public static void sendDeleteFromFavorites(Context context, int itemId) throws JSONException {
 		String result = null;
 		try {
-			if (isLoginned()) {
+			
 				// Deleting from favorites
 				HttpDeleteWithBody httdelete = new HttpDeleteWithBody(Constants.URL + "/items/" + itemId);
 				Log.d(TAG, "Delete Statement: " + Constants.URL + "/items/" + itemId);
@@ -258,9 +255,7 @@ public class HttpFactory  {
 							.convertStreamToString(entity2.getContent());
 					Log.d(TAG, "Entity2: " + result);
 				}
-			} else {
-				Log.d(TAG, "Not isLoginned()");
-			}
+			
 		} catch (ClientProtocolException e) {
 			Log.d(TAG, "Connection failed; " + e.getMessage());
 		} catch (IOException e) {
@@ -283,11 +278,13 @@ public class HttpFactory  {
 				Log.d(TAG, "Result: " + result);
 			}
 			List<Cookie> cookies = httpclient.getCookieStore().getCookies();
+			Log.d(TAG, "TokenName :" + HttpFactory.token_name);
+		    Log.d(TAG, "TokenValue :" + HttpFactory.token_value);
 			if (cookies.isEmpty()) {
-				Log.d(TAG, "No cookies");
+				Log.d(TAG, "Cookies setUpTokens none");
 			} else {
 				for (int i = 0; i < cookies.size(); i++) {
-					Log.d(TAG, "Cookies: " + cookies.get(i).toString());
+					Log.d(TAG, "Cookies setUpTokens : " + cookies.get(i).toString());
 				}
 			}
 			JSONObject jsonResponse = new JSONObject(result.trim());
@@ -298,10 +295,18 @@ public class HttpFactory  {
 			Log.d(TAG, "setUpTokens token_name: " + HttpFactory.token_name);
 	}
 	
-	public static boolean isLoginned() throws IllegalStateException, IOException, JSONException {
+	public static void setUpCookies() throws IllegalStateException, IOException, JSONException {
 		String result = "";
 		// Requesting tokens
 		setUpTokens();
+		List<Cookie> cookies = httpclient.getCookieStore().getCookies();
+	    if (cookies.isEmpty()) {
+	    	Log.d(TAG, "Cookies none isLoginned");
+	    } else {
+	        for (int i = 0; i < cookies.size(); i++) {
+	        	Log.d(TAG, "Cookies isLoginned : " + cookies.get(i).toString()); 
+	        }
+	    }
 		// Logining
 		HttpPost httpost = new HttpPost(Constants.URL_LOGIN);
 		httpost.setHeader("Accept", "application/json");
@@ -325,21 +330,21 @@ public class HttpFactory  {
 					.convertStreamToString(entity1.getContent());
 			Log.d(TAG, "Entity1: " + result);
 		}
-		boolean response;
+		boolean response = false;
 		try {
 			JSONObject jsonResponse = new JSONObject(result);
 			Log.d(TAG, "jsonResponse: " + jsonResponse.getBoolean("status"));
 			response = jsonResponse.getBoolean("status");
 			Log.d(TAG, "response: " + response);
 		} catch (Exception e) {
-			return false;
+		
 		}
 		if (response) {
 			Log.d(TAG, "isLoginned(String login, String password) " + true);
-			return true;
+		
 		} else {
 			Log.d(TAG, "isLoginned(String login, String password): " + false);
-			return false;
+		
 		}
    }
 	
@@ -411,8 +416,42 @@ public class HttpFactory  {
 	 public static String getProfileString() throws IllegalStateException, JSONException {
 		 String result = null;
 				try {
-					isLoginned();
-					//setUpTokens();
+					//isLoginned();
+					/*
+					List<Cookie> cookies = httpclient.getCookieStore().getCookies();
+					Log.d(TAG, "TokenName :" + HttpFactory.token_name);
+				    Log.d(TAG, "TokenValue :" + HttpFactory.token_value);
+					if (cookies.isEmpty()) {
+				    	Log.d(TAG, "Cookies getProfileString none");
+				    } else {
+				        for (int i = 0; i < cookies.size(); i++) {
+				        	Log.d(TAG, "Cookies getProfileString : " + cookies.get(i).toString()); 
+				        }
+				    }
+					setUpTokens();
+					
+					List<Cookie> cookies1 = httpclient.getCookieStore().getCookies();
+					Log.d(TAG, "TokenName :" + HttpFactory.token_name);
+				    Log.d(TAG, "TokenValue :" + HttpFactory.token_value);
+				    if (cookies1.isEmpty()) {
+				    	Log.d(TAG, "Cookies1 getProfileString1 none");
+				    } else {
+				        for (int i = 0; i < cookies1.size(); i++) {
+				        	Log.d(TAG, "Cookies1 getProfileString1 : " + cookies1.get(i).toString()); 
+				        }
+				    }
+				    */
+				    List<Cookie> cookies2 = httpclient.getCookieStore().getCookies();
+				    Log.d(TAG, "TokenName :" + HttpFactory.token_name);
+				    Log.d(TAG, "TokenValue :" + HttpFactory.token_value);
+				    
+				    if (cookies2.isEmpty()) {
+				    	Log.d(TAG, "Cookie getProfileString2 none");
+				    } else {
+				        for (int i = 0; i < cookies2.size(); i++) {
+				        	Log.d(TAG, "Cookies getProfileString2 : " + cookies2.get(i).toString()); 
+				        }
+				    }
 				  Log.d(TAG, "getProfileString: " +  1);
 				// Deleting from favorites
 				// Prepare a request object
@@ -453,7 +492,7 @@ public class HttpFactory  {
 					Log.d(TAG, "Connection failed; " + e.getMessage());
 				}	
 			
-			} catch (IOException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			return result;

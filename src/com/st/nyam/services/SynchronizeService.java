@@ -92,7 +92,7 @@ public class SynchronizeService extends IntentService {
 		   	String result = "";
 		   	try {
 	    	Log.d(TAG, "AsyncLogin 1");
-	    	if (HttpFactory.isLoginned()) { 
+	    	
 	    		StringBuilder idsParams = new StringBuilder();
 		    	for (int i = 0; i < knownRecipes.size(); i ++) {
 		    		idsParams.append("&ids[]=" + knownRecipes.get(i).getId());
@@ -115,9 +115,6 @@ public class SynchronizeService extends IntentService {
 		    	} else {
 			    		Log.d(TAG, "ResultList is empty");
 			    	}
-		    	} else {
-		    		Log.d(TAG, "Not isLoginned()");
-		    	}
 	    	    List<Integer> ids_to_delete = ModelUtil.getListToDelete(result);
 	    	    if (ids_to_delete != null && !ids_to_delete.isEmpty()) {
 	    	    	for(Integer i : ids_to_delete) {

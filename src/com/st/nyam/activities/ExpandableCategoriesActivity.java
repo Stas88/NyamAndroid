@@ -40,7 +40,24 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 	        super.onCreate(savedInstanceState);
 	        LayoutInflater inflater = LayoutInflater.from(this);
 	        ExpandableListView list = (ExpandableListView)inflater.inflate(R.layout.main, null);
+	        list.setOnGroupExpandListener(new OnGroupExpandListener() { 
+	        	
+	            @Override 
+	            public void onGroupExpand(int groupPosition) { 
+	            	View v = adapter.getGroupView(groupPosition, true, null, null);
+	                v.setBackgroundColor(R.color.orange_expanded_upper);
+	            } 
+	        }); 
+
+	        list.setOnGroupCollapseListener(new OnGroupCollapseListener() { 
+	            @Override 
+	            public void onGroupCollapse(int groupPosition) { 
+	            	View v = adapter.getGroupView(groupPosition, true, null, null);
+	                v.setBackgroundColor(R.color.white);
+	            } 
+	        }); 
 	        setContentView(list);
+	        
 	        getSupportActionBar().setTitle("Категории");
 	        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	        

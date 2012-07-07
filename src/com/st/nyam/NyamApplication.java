@@ -1,15 +1,21 @@
 package com.st.nyam;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
+
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.st.nyam.factories.DataBaseFactory;
+import com.st.nyam.factories.HttpFactory;
 import com.st.nyam.models.MainCategory;
 
 public class NyamApplication extends Application {
@@ -33,6 +39,8 @@ public class NyamApplication extends Application {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		Object [] params = new Object [] {};
+		new SetUpCookies().execute(params);
 		db = new DataBaseFactory(this);
 		mainCategories =  db.getMainCategories(0).toArray();
 		isLoginned = false;
@@ -41,6 +49,21 @@ public class NyamApplication extends Application {
 		fillLoginPassword();
 		super.onCreate();
 	}
+	
+	public static void setUpCookies(Context context) {
+		if (HttpFactory.isNetworkAvailable(context)) {
+			try {
+				HttpFactory.setUpCookies();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	
 	public void onDestroy() {
 		storeLoginPassword();
@@ -160,5 +183,21 @@ public class NyamApplication extends Application {
 		NyamApplication.token_value = token_value;
 	}
 	
-	
+	private class SetUpCookies extends AsyncTask<Object, String, Boolean> {
+		
+		@Override
+		protected Boolean doInBackground(Object... params) {
+			Boolean isAdded = null;
+			try {
+				HttpFactory.setUpCookies();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return isAdded;
+		}
+	}
 }

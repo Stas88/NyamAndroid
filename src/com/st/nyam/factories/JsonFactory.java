@@ -78,7 +78,10 @@ public class JsonFactory {
 	
 	public static JSONObject getProfileFromUrl() throws JSONException {
 		String string = HttpFactory.getProfileString();
-		JSONObject object = new JSONObject(string.trim());
+		JSONObject object = null;
+		if (string != null) {
+			object = new JSONObject(string.trim());
+		}
 		return object;
 	}
 }

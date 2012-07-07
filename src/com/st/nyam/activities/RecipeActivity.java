@@ -290,7 +290,7 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 		case R.id.add_button:
 			Log.d(TAG, "Pressed save to favorites");
 			if (!action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
-				if (HttpFactory.isNetworkAvailable(this)) {
+				
 					Log.d(TAG, "Add button pressed Network eavailable");
 					if (NyamApplication.isPasswordExists()) {
 						Log.d(TAG, "application.isPasswordExists(): " + application.isPasswordExists());
@@ -314,27 +314,29 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 				} else {
 					//Show dialog: "Network unavailable"
 				}
-			}
 			break;
 		case R.id.remove_button:
-			if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
-				Log.d(TAG, "Delete button pressed");
-				int item_id = db.getItemIdById(recipeGeneral.getId());
-				db.deleteRecipeFromFavorites((Recipe)recipeGeneral);
-				Object[] params = new Object[] {this, item_id};
-				Log.d(TAG, "recipeGeneral.getPath(): " + recipeGeneral.getPath());
-				Log.d(TAG, "recipeGeneral.item_id: " + item_id);
-				new DeleteFromFavorites().execute(params);
-				Intent intent = getIntent();
-				intent.putExtra("deletedRecipe", recipeGeneral);
-				Log.d(TAG, "Extra putted");
-				setResult(RESULT_OK, intent);
-				Log.d(TAG, "Result_OK sent");
-				finish();
+			if (HttpFactory.isNetworkAvailable(this)) {
+				if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
+					Log.d(TAG, "Delete button pressed");
+					int item_id = db.getItemIdById(recipeGeneral.getId());
+					db.deleteRecipeFromFavorites((Recipe)recipeGeneral);
+					Object[] params = new Object[] {this, item_id};
+					Log.d(TAG, "recipeGeneral.getPath(): " + recipeGeneral.getPath());
+					Log.d(TAG, "recipeGeneral.item_id: " + item_id);
+					new DeleteFromFavorites().execute(params);
+					Intent intent = getIntent();
+					intent.putExtra("deletedRecipe", recipeGeneral);
+					Log.d(TAG, "Extra putted");
+					setResult(RESULT_OK, intent);
+					Log.d(TAG, "Result_OK sent");
+					finish();
+				} else {
+					//Show dialog: "Network unavailable"
+				}
 			}
 			else {
 				Log.d(TAG, "Delete button pressed");
-				if (HttpFactory.isNetworkAvailable(this)) {
 					Log.d(TAG, "Delete button pressed Network eavailable");
 					if (NyamApplication.isPasswordExists()) {
 						Log.d(TAG, "Delete button pressed Password exist");
@@ -352,11 +354,8 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					else {
 						showDialog();
 					}
-				} else {
-					//Show dialog: "Network unavailable"
-				}
 			}
-			break;
+		break;
 		}
 		
 	}
