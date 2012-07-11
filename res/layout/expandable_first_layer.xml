@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/expandable_first_layer_selector">
+    android:background="@color/white">
     <TextView android:id="@+id/expandable_first_layer"
          android:textStyle="bold"
          android:textSize="20dp"

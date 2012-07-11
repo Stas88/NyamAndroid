@@ -13,6 +13,8 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.SimpleExpandableListAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockExpandableListActivity;
 import com.actionbarsherlock.view.Menu;
@@ -39,23 +41,8 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        LayoutInflater inflater = LayoutInflater.from(this);
-	        ExpandableListView list = (ExpandableListView)inflater.inflate(R.layout.main, null);
-	        list.setOnGroupExpandListener(new OnGroupExpandListener() { 
-	        	
-	            @Override 
-	            public void onGroupExpand(int groupPosition) { 
-	            	View v = adapter.getGroupView(groupPosition, true, null, null);
-	                v.setBackgroundColor(R.color.orange_expanded_upper);
-	            } 
-	        }); 
-
-	        list.setOnGroupCollapseListener(new OnGroupCollapseListener() { 
-	            @Override 
-	            public void onGroupCollapse(int groupPosition) { 
-	            	View v = adapter.getGroupView(groupPosition, true, null, null);
-	                v.setBackgroundColor(R.color.white);
-	            } 
-	        }); 
+	        final ExpandableListView list = (ExpandableListView)inflater.inflate(R.layout.main, null);
+	        
 	        setContentView(list);
 	        
 	        getSupportActionBar().setTitle("Категории");
@@ -83,17 +70,34 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 	            childTo);
 	        setListAdapter(adapter);
 	        
+	        
 	        list.setOnGroupExpandListener(new OnGroupExpandListener() { 
+	        	
 	            @Override 
 	            public void onGroupExpand(int groupPosition) { 
-	            	adapter.getGroup(groupPosition);
+	            	long groupId = adapter.getGroupId(groupPosition);
+	            	Toast.makeText(getBaseContext(), "Group =  " + adapter.getGroupId(groupPosition), Toast.LENGTH_SHORT).show();
+	            	Log.d(TAG, "Group expanded");
+	            	View v = adapter.getGroupView((int) groupId, true, null, list);
+	            	if (v != null) {
+	            		Log.d(TAG, "View onGroupExpand : " + v);
+	            	} else {
+	            		Log.d(TAG, "View onGroupExpand v = null");
+	            	}
+	            	TextView txt = (TextView)v.findViewById(R.id.expandable_first_layer);
+	            	Log.d(TAG, "txt: " + txt.getText());
+	            	txt.setText("Tru-ru-ru");
+	            	Log.d(TAG, "txt: " + txt.getText());
+	            	v.setBackgroundColor(R.color.orange_expanded_upper);
+	            	adapter.notifyDataSetChanged();
 	            } 
 	        }); 
 
 	        list.setOnGroupCollapseListener(new OnGroupCollapseListener() { 
 	            @Override 
 	            public void onGroupCollapse(int groupPosition) { 
-	                // code to set your background back to your collapsed color
+	            	View v = adapter.getGroupView(groupPosition, true, null, null);
+	                v.setBackgroundColor(R.color.white);
 	            } 
 	        }); 
 	    }
@@ -126,7 +130,7 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 			Log.d(TAG, "In onOptionsItemSelected");
 			Log.d(TAG, "In item.getItemId() = " + item.getItemId());
 			switch(item.getItemId())  {
-				case R.id.menu_search: 
+				case 2131099773: 
 					Log.d(TAG, "menu_search");
 					onSearchRequested();
 					return true;
@@ -139,9 +143,12 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 			}		
 		}
 		
+	
 		@Override
 		public boolean onSearchRequested() {
 		    Bundle appData = new Bundle();
+	    	appData.putBoolean("isSearchFavorites", false);
+	    	Log.d(TAG, "In Search putted isSearchFavorites true");
 		    startSearch(null, false, appData, false);
 		    return true;
 		}

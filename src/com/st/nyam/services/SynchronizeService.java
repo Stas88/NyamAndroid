@@ -3,35 +3,18 @@ package com.st.nyam.services;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.ResultReceiver;
-import android.text.format.DateUtils;
-import android.text.format.Time;
 import android.util.Log;
 
 import com.st.nyam.NyamApplication;
@@ -39,7 +22,6 @@ import com.st.nyam.factories.DataBaseFactory;
 import com.st.nyam.factories.HttpFactory;
 import com.st.nyam.models.Recipe;
 import com.st.nyam.models.RecipeGeneral;
-import com.st.nyam.models.Step;
 import com.st.nyam.util.Constants;
 import com.st.nyam.util.ModelUtil;
 import com.st.nyam.util.SanInputStream;
@@ -93,11 +75,11 @@ public class SynchronizeService extends IntentService {
 		   	try {
 	    	Log.d(TAG, "AsyncLogin 1");
 	    	
-	    		StringBuilder idsParams = new StringBuilder();
+	    		int [] idsParams = new int [knownRecipes.size()];
 		    	for (int i = 0; i < knownRecipes.size(); i ++) {
-		    		idsParams.append("&ids[]=" + knownRecipes.get(i).getId());
+		    		idsParams[i] = knownRecipes.get(i).getId();
 		    	}
-		    	result = HttpFactory.getSyncJSONRecipes(idsParams.toString());
+		    	result = HttpFactory.getSyncJSONRecipes(idsParams);
 		    	Log.d(TAG, "list of recipes sync = " +  result);
 		    	resultList = ModelUtil.getRecipesFromJSONString(result);
 		    	
@@ -130,6 +112,9 @@ public class SynchronizeService extends IntentService {
 			e.printStackTrace();
 			receiver.send(Constants.AUTHORIZATION_NOT_PASSED, null);
 		} catch (IOException e) {
+			receiver.send(Constants.AUTHORIZATION_NOT_PASSED, null);
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			receiver.send(Constants.AUTHORIZATION_NOT_PASSED, null);
 			e.printStackTrace();
 		}

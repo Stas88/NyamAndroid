@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -392,9 +396,21 @@ public class HttpFactory  {
 		}
    }
 
-	public static String getSyncJSONRecipes(String idsParams) throws ClientProtocolException, IOException {
+	public static String getSyncJSONRecipes(int[] idsParams) throws ClientProtocolException, IOException, NumberFormatException, URISyntaxException {
 		String result = "";
-		HttpGet httpget2 = new HttpGet(Constants.URL_SYNC + "?ids[]=0" + idsParams);
+		HttpGet httpget2 = null;
+		if (idsParams.length != 0) {
+			List<NameValuePair> qparams = new ArrayList<NameValuePair>();
+			for (int i : idsParams) {
+				qparams.add(new BasicNameValuePair("ids[]", String.valueOf(i)));
+			}
+		    URI uri = URIUtils.createURI("http", Constants.URL_SHORT, Integer.valueOf(Constants.PORT), Constants.SYNC_PATH,
+		                                 URLEncodedUtils.format(qparams, "UTF-8"), null);
+		    httpget2 = new HttpGet(uri);
+		    //http://www.google.com/search?q=httpclient&btnG=Google+Search&aq=f&oq=
+		} else {
+			httpget2 = new HttpGet(Constants.URL_SYNC);
+		}
         httpget2.setHeader("Accept", "application/json");
         Log.d(TAG, "Request line: " + httpget2.getRequestLine());
         Log.d(TAG, "Request params: " + httpget2.getParams());

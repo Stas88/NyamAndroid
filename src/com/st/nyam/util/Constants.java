@@ -4,19 +4,22 @@ import android.content.Intent;
 
 public class Constants {
 	
-	public final static String URL = "http://nyam.ru";
-	public final static String Profile_URL = "http://nyam.ru/my";
-	public final static String URL_MY = "http://nyam.ru";
-	public final static String URL_RECIPES = "http://nyam.ru/recipes";
+	public final static String URL = "http://192.168.11.150:3001/";
+	public final static String URL_SHORT = "192.168.11.150";
+	public final static String PORT = "3001";
+	public final static String SYNC_PATH = "/recipes/sync";
+	public final static String Profile_URL = "http://192.168.11.150:3001/my";
+	public final static String URL_MY = "http://192.168.11.150:3001/";
+	public final static String URL_RECIPES = "http://192.168.11.150:3001/recipes";
 	public final static String JSON = ".json";
 	
-	public final static String URL_ADD_TO_FAVORITES = "http://nyam.ru/items";
+	public final static String URL_ADD_TO_FAVORITES = "http://192.168.11.150:3001/items";
 	public final static String DELETE_FROM_FAVORITES = "delete_from_favorites";
 	
 
-	public final static String URL_LOGIN = "http://nyam.ru/users/sign_in";
-	public final static String URL_SYNC = "http://nyam.ru/recipes/sync";
-	public final static String URL_SEARCH = "http://nyam.ru/search/simple";
+	public final static String URL_LOGIN = "http://192.168.11.150:3001/users/sign_in";
+	public final static String URL_SYNC = "http://192.168.11.150:3001/recipes/sync";
+	public final static String URL_SEARCH = "http://192.168.11.150:3001/search/simple";
 	
 	public final static String LOGIN = "s777345@gmail.com";
 	public final static String PASSWORD = "123321";

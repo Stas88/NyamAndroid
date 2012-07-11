@@ -36,7 +36,7 @@ import com.st.nyam.models.RecipeGeneral;
 import com.st.nyam.services.SynchronizeService;
 import com.st.nyam.util.Constants;
 
-public class MainListActivity extends SherlockListActivity  implements OnScrollListener{
+public class MainListActivity extends SherlockListActivity  implements OnScrollListener {
 
 	private NyamApplication application;
 	private DataBaseFactory db;
@@ -328,23 +328,23 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId())  {
-		case R.id.menu_search: 
-			onSearchRequested();
-			return true;
-		case R.id.catalog: 
-			if(HttpFactory.isNetworkAvailable(this)) {
-				Intent mainCategoryIntent = new Intent(this, ExpandableCategoriesActivity.class);
-				startActivity(mainCategoryIntent);
-			} else {
-				showDialog(Constants.DAILOG_INTERNET_UNAVAILABLE);
-			}
-			return true;
-		case 16908332: 
-			Log.d(TAG, "logo");
-			startActivity(new Intent(this, DashboardActivity.class));
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+			case R.id.menu_search: 
+				onSearchRequested();
+				return true;
+			case R.id.catalog: 
+				if(HttpFactory.isNetworkAvailable(this)) {
+					Intent mainCategoryIntent = new Intent(this, ExpandableCategoriesActivity.class);
+					startActivity(mainCategoryIntent);
+				} else {
+					showDialog(Constants.DAILOG_INTERNET_UNAVAILABLE);
+				}
+				return true;
+			case 16908332: 
+				Log.d(TAG, "logo");
+				startActivity(new Intent(this, DashboardActivity.class));
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}		
 	}
 	

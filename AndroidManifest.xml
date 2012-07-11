@@ -10,13 +10,15 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
     
     <application
    		android:icon="@drawable/logo"
         android:label="@string/app_name" 
         android:name="NyamApplication"
         android:theme="@style/Theme.NyamTheme">
-        <activity android:name=".activities.SplashActivity">
+        <activity android:configChanges="orientation" 
+            android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -28,6 +30,7 @@
         </activity>
         <activity
             android:name=".activities.MainListActivity"
+            android:configChanges="orientation"
             android:label="@string/app_name" >
             <intent-filter>
 		        <action android:name="android.intent.action.SEARCH" />
@@ -37,29 +40,36 @@
 		        android:resource="@xml/searchable"/>
          </activity>
          <activity 
+             android:configChanges="orientation"
 	         android:name=".activities.RecipeActivity" >
+		    
          </activity>
-         <activity 
-	         android:name=".activities.MainCategoryActivity" >
-         </activity>
-        <activity 
-	        android:name=".activities.StepActivity" >
-        </activity>
         <activity android:theme="@android:style/Theme.Dialog" 
 	        android:name=".activities.DialogActivity" >
         </activity>
         <activity android:theme="@style/Theme.NyamTheme"
+            android:configChanges="orientation"
 	        android:name=".activities.ExpandableCategoriesActivity" >
+		    <intent-filter>
+		        <action android:name="android.intent.action.SEARCH" />
+		    </intent-filter>
+		    <meta-data android:name="android.app.searchable"
+                      android:resource="@xml/searchable"/>
         </activity>
         <activity android:theme="@style/Theme.NyamTheme"
+            android:configChanges="orientation"
 	        android:name=".activities.ProfileActivity" >
         </activity>
         <service android:name=".services.SynchronizeService" />
         <service android:name=".services.ConstantSynchronizationService" />
-       
-
+      
+   		<receiver android:name=".broadcast_receivers.ConnectionChangeReceiver"
+          android:label="NetworkConnection">
+			  <intent-filter>
+			    <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+			  </intent-filter>
+		</receiver>
         
-   
         <receiver android:name=".broadcast_receivers.SyncBroadcastReceier" android:enabled="true" android:exported="false">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />  

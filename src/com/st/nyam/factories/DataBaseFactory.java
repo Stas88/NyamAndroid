@@ -380,21 +380,19 @@ public class DataBaseFactory   {
 	
 	public int getItemIdById(int recipeId) {
 		int item_id = -1;
-		if (isRecipeExists(recipeId)) { 
-			Cursor c = db.rawQuery(SELECT_ITEM_ID_BY_ID,
-					new String[] { Integer.toString(recipeId)});
-			try {
-				Log.d(TAG, "getItemIdById before c.movetoFirst()");
-				if (c.moveToFirst()) {
-					if (c != null && c.getCount() > 0) {
-						Log.d(TAG, "Checking passed");
-						item_id = c.getInt(c.getColumnIndex("item_id"));
-					}
+		Cursor c = db.rawQuery(SELECT_ITEM_ID_BY_ID,
+				new String[] { Integer.toString(recipeId)});
+		try {
+			Log.d(TAG, "getItemIdById before c.movetoFirst()");
+			if (c.moveToFirst()) {
+				if (c != null && c.getCount() > 0) {
+					Log.d(TAG, "Checking passed");
+					item_id = c.getInt(c.getColumnIndex("item_id"));
 				}
-			} finally {
-				if (c != null) {
-					c.close();
-				}
+			}
+		} finally {
+			if (c != null) {
+				c.close();
 			}
 		}
 		return item_id;

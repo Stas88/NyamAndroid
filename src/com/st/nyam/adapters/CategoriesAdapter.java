@@ -18,7 +18,8 @@ import com.st.nyam.activities.ExpandableCategoriesActivity;
 public class CategoriesAdapter extends SimpleExpandableListAdapter {
 	
 	private Context context;
-
+	private ArrayList<Map<String, String>> groupData;
+	
 	public CategoriesAdapter(
 			ExpandableCategoriesActivity expandableCategoriesActivity,
 			ArrayList<Map<String, String>> groupData, int expandableFirstLayer,
@@ -27,8 +28,11 @@ public class CategoriesAdapter extends SimpleExpandableListAdapter {
 			int expandableSecondLayer, String[] childFrom, int[] childTo) {
 			super(expandableCategoriesActivity,groupData, expandableFirstLayer, groupFrom, groupTo, childData, expandableSecondLayer,childFrom, childTo);
 			context = expandableCategoriesActivity.getBaseContext();
+			this.groupData = groupData; 
 			
 	}
+	
+	
 
 	
 

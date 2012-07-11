@@ -332,24 +332,34 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					Log.d(TAG, "Result_OK sent");
 					finish();
 				} else {
-					//Show dialog: "Network unavailable"
+					Log.d(TAG, "Delete button pressed");
+					int item_id = db.getItemIdById(recipeGeneral.getId());
+					db.deleteRecipeFromFavorites((Recipe)recipe);
+					changeIntoAddButton();
+					Object[] params = new Object[] {this, item_id};
+					Log.d(TAG, "recipeGeneral.getPath(): " + recipeGeneral.getPath());
+					Log.d(TAG, "recipeGeneral.item_id: " + item_id);
+					new DeleteFromFavorites().execute(params);
+					Intent intent = getIntent();
+					intent.putExtra("deletedRecipe", recipeGeneral);
+					Log.d(TAG, "Extra putted");
+					setResult(RESULT_OK, intent);
+					Log.d(TAG, "Result_OK sent");
 				}
 			}
 			else {
 				Log.d(TAG, "Delete button pressed");
 					Log.d(TAG, "Delete button pressed Network eavailable");
 					if (NyamApplication.isPasswordExists()) {
-						Log.d(TAG, "Delete button pressed Password exist");
-						int item_id = db.getItemIdById(recipeGeneral.getId());
-						db.deleteRecipeFromFavorites((Recipe)recipe);
-						Object[] params = new Object[] {this, item_id};
-						Log.d(TAG, "recipeGeneral.item_id : " + item_id);
-						new DeleteFromFavorites().execute(params);
-						changeIntoAddButton();
-						Intent intent = getIntent();
-						intent.putExtra("deletedRecipe", recipeGeneral);
-						setResult(Constants.RESULT_OK_REMOVE_FAV, intent);
-						Log.d(TAG, "Extra putted");
+						if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
+							Log.d(TAG, "Delete button pressed Password exist");
+							db.deleteRecipeFromFavorites((Recipe)recipeGeneral);
+							Intent intent = getIntent();
+							intent.putExtra("deletedRecipe", recipeGeneral);
+							setResult(Constants.RESULT_OK_REMOVE_FAV, intent);
+							Log.d(TAG, "Extra putted");
+							finish();
+						}
 					}
 					else {
 						showDialog();
