@@ -33,7 +33,7 @@ public class ImageLoader {
     FileCache fileCache;
     private Map<ImageView, String> imageViews= Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService; 
-    final int stub_id = R.drawable.stub;
+    //final int stub_id = R.drawable.stub;
     
     public ImageLoader(Context context){
         fileCache = new FileCache(context);
@@ -56,7 +56,7 @@ public class ImageLoader {
 	        	Log.d(TAG, "displayImage() 5");
 	            queuePhoto(url, imageView);
 	            Log.d(TAG, "displayImage() 6");
-	            imageView.setImageResource(stub_id);
+	            //imageView.setImageResource(stub_id);
 	            Log.d(TAG, "displayImage() 7");
         	} else {
         		Log.d(TAG, "isFavorites: "  + isFavorites);
@@ -186,8 +186,6 @@ public class ImageLoader {
                 return;
             if(bitmap!=null)
                 photoToLoad.imageView.setImageBitmap(bitmap);
-            else
-                photoToLoad.imageView.setImageResource(stub_id);
         }
     }
 

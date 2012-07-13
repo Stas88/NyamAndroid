@@ -817,16 +817,16 @@ containing a value of this type.
         public static final int expandable_first_layer_selector=0x7f020065;
         public static final int expandable_second_layer_arrow=0x7f020066;
         public static final int expandable_second_layer_selector=0x7f020067;
-        public static final int expander_ic_maximized=0x7f020068;
-        public static final int expander_ic_maximized1=0x7f020069;
-        public static final int expander_ic_minimized=0x7f02006a;
-        public static final int expander_ic_minimized1=0x7f02006b;
-        public static final int favorite_dark=0x7f02006c;
-        public static final int favorites=0x7f02006d;
-        public static final int favorites_yellow=0x7f02006e;
-        public static final int further=0x7f02006f;
-        public static final int girl=0x7f020070;
-        public static final int goods=0x7f020071;
+        public static final int expanded_upper_selector=0x7f020068;
+        public static final int expander_ic_maximized=0x7f020069;
+        public static final int expander_ic_maximized1=0x7f02006a;
+        public static final int expander_ic_minimized=0x7f02006b;
+        public static final int expander_ic_minimized1=0x7f02006c;
+        public static final int favorite_dark=0x7f02006d;
+        public static final int favorites=0x7f02006e;
+        public static final int favorites_yellow=0x7f02006f;
+        public static final int further=0x7f020070;
+        public static final int girl=0x7f020071;
         public static final int group_indicator=0x7f020072;
         public static final int group_indicator_down=0x7f020073;
         public static final int group_indicator_right=0x7f020074;
@@ -855,8 +855,7 @@ containing a value of this type.
         public static final int star=0x7f02008b;
         public static final int star_grey=0x7f02008c;
         public static final int star_orange=0x7f02008d;
-        public static final int stub=0x7f02008e;
-        public static final int yellow_point=0x7f02008f;
+        public static final int yellow_point=0x7f02008e;
     }
     public static final class id {
         public static final int about=0x7f060051;
@@ -907,7 +906,6 @@ containing a value of this type.
         public static final int delete_button=0x7f060070;
         public static final int disableHome=0x7f060009;
         public static final int end_step=0x7f060082;
-        public static final int expandable_first_layer=0x7f06002c;
         public static final int expandable_second_layer_text=0x7f06002e;
         public static final int experience=0x7f06004f;
         public static final int experience_data=0x7f060050;
@@ -917,6 +915,7 @@ containing a value of this type.
         public static final int friends=0x7f060063;
         public static final int friends_data=0x7f060064;
         public static final int friends_frame=0x7f060062;
+        public static final int groupname=0x7f06002c;
         public static final int hobbies=0x7f06004b;
         public static final int hobbies_data=0x7f06004c;
         public static final int homeAsUp=0x7f060006;

@@ -93,7 +93,7 @@ public class LazyAdapter extends ArrayAdapter<RecipeGeneral> {
         			Environment.getExternalStorageDirectory().toString() + 
         			"/Nyam/NyamRecipesFavorites/" + recipe.getImg_url().replace('/', '&'));
         	Log.d(TAG, "Bitmap: "  + bitmap);
-        	imgIcon.setImageBitmap(bitmap);
+        	imgIcon.setImageBitmap(bitmap);ыеги
         } else {
         */
     	Log.d(TAG, "Not favorite");
@@ -102,7 +102,6 @@ public class LazyAdapter extends ArrayAdapter<RecipeGeneral> {
         //}
         //if (position == getCount() - 1) {
             //loadNextPage();
-        //}
         return row;
     }
     

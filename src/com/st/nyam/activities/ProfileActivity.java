@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,14 +83,53 @@ public class ProfileActivity extends SherlockActivity {
 		String imgUrl = Constants.URL + profile.getImg_path();
 		String [] params = new String[] {imgUrl};
 		new DownloadImageTask().execute(params);
-		name.setText(profile.getName());
+		Log.d(TAG, "profile.getName() :" + profile.getName());
+	    name.setText(profile.getName());
+		Log.d(TAG, "profile.getLevel() :" + profile.getLevel());
 		level.setText(profile.getLevel());
-		favorite_dishes.setText(profile.getFavorite_dishes());
-		hobbies.setText(profile.getHobbies());
-		interests.setText(profile.getInterests());
-		experience.setText(profile.getExperience());
-		about.setText(profile.getAbout());
 		
+		if (profile.getFavorite_dishes().equals("")) {
+			profile_layout.findViewById(R.id.favorite_dishes).setVisibility(View.GONE);
+			favorite_dishes.setVisibility(View.GONE);		
+		} else {
+			Log.d(TAG, "profile.getFavorite_dishes() :" + profile.getFavorite_dishes());
+			favorite_dishes.setText(profile.getFavorite_dishes());
+		}
+		
+		
+		if (profile.getHobbies().equals("")) {
+			profile_layout.findViewById(R.id.hobbies).setVisibility(View.GONE);
+			hobbies.setVisibility(View.GONE);		
+		} else {
+			Log.d(TAG, "profile.getHobbies() :" + profile.getHobbies());
+			hobbies.setText(profile.getHobbies());
+		}
+		
+		if (profile.getInterests().equals("")) {
+			profile_layout.findViewById(R.id.interests).setVisibility(View.GONE);
+			interests.setVisibility(View.GONE);		
+		} else {
+			Log.d(TAG, "profile.getInterests() :" + profile.getInterests());
+			interests.setText(profile.getInterests());
+		}
+		
+		if (profile.getExperience().equals("") || profile.getExperience().equals("null")) {
+			profile_layout.findViewById(R.id.experience).setVisibility(View.GONE);
+			experience.setVisibility(View.GONE);		
+		} else {
+			Log.d(TAG, "profile.getExperience() :" + profile.getExperience());
+			experience.setText(profile.getExperience());
+		}
+		
+		if (profile.getAbout().equals("")) {
+			profile_layout.findViewById(R.id.about).setVisibility(View.GONE);
+			about.setVisibility(View.GONE);		
+		} else {
+			Log.d(TAG, "profile.getAbout() :" + profile.getAbout());
+			about.setText(profile.getAbout());
+		}
+		
+	
 		published_recepies.setText(String.valueOf(profile.getPublished_recepies()));
 		added_to_favorites.setText(String.valueOf(profile.getAdded_to_favorites()));
 		comments_left.setText(String.valueOf(profile.getComments_left()));

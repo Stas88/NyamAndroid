@@ -6,24 +6,20 @@ public class Ingredient {
 
 	private int id;
 	private String name;
-	private String desc;
-	private int parent;
-	private Date created_at;
-	private Date updated_at;
-	private String ablative;
-	private int moderated;
+	private String value;
+	private String type;
+	private int recipe_id;
 
-	public Ingredient(int id, String name, String desc, int parent,
-			Date created_at, Date updated_at, String ablative, int moderated) {
+	public Ingredient() {}
+
+	public Ingredient(int id, String name, String value, String type,
+			int recipe_id) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.desc = desc;
-		this.parent = parent;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
-		this.ablative = ablative;
-		this.moderated = moderated;
+		this.value = value;
+		this.type = type;
+		this.recipe_id = recipe_id;
 	}
 
 	public int getId() {
@@ -42,52 +38,37 @@ public class Ingredient {
 		this.name = name;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getValue() {
+		return value;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
-	public int getParent() {
-		return parent;
+	public String getType() {
+		return type;
 	}
 
-	public void setParent(int parent) {
-		this.parent = parent;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public Date getCreated_at() {
-		return created_at;
+	public int getRecipe_id() {
+		return recipe_id;
 	}
 
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+	public void setRecipe_id(int recipe_id) {
+		this.recipe_id = recipe_id;
 	}
 
-	public Date getUpdated_at() {
-		return updated_at;
+	@Override
+	public String toString() {
+		return "Ingredient [id=" + id + ", name=" + name + ", value=" + value
+				+ ", type=" + type + ", recipe_id=" + recipe_id + "]";
 	}
-
-	public void setUpdated_at(Date updated_at) {
-		this.updated_at = updated_at;
-	}
-
-	public String getAblative() {
-		return ablative;
-	}
-
-	public void setAblative(String ablative) {
-		this.ablative = ablative;
-	}
-
-	public int getModerated() {
-		return moderated;
-	}
-
-	public void setModerated(int moderated) {
-		this.moderated = moderated;
-	}
+	
+	
+	
 
 }

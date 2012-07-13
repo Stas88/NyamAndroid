@@ -109,7 +109,7 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 					adapter = new LazyAdapter(this, R.layout.list_item_picture_text, tempList, true);
 					Log.d(TAG, "Dialog Canceled");
 					setListAdapter(adapter);
-					
+					setSupportProgressBarIndeterminateVisibility(false);
 					Log.d(TAG, "Getting Application 123 4");
 				} else {
 					isFavorites = false;

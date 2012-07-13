@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.st.nyam.models.Ingredient;
 import com.st.nyam.models.MainCategory;
 import com.st.nyam.models.Profile;
 import com.st.nyam.models.Recipe;
@@ -251,6 +252,28 @@ public class ModelUtil {
 		Log.d(TAG, "After replacing ?++");
 		return step;
 	}
+	
+	public static List<Ingredient> getIngredientsFromJSON(JSONObject object) throws JSONException {
+		List<Ingredient> ingredients = new ArrayList<Ingredient>();
+		Log.d(TAG, "ingredientObject = " + object.toString());
+		
+		JSONArray ingredientsArray = object.getJSONArray("ingredients");
+		for(int i = 0; i < ingredientsArray.length(); i ++) {
+			Ingredient ingredient = new Ingredient();
+			Log.d(TAG, "id = " + object.getInt("id"));
+			ingredient.setId(object.getInt("id"));
+			Log.d(TAG, "name = " + object.getString("name"));
+			ingredient.setName(object.getString("name"));
+			Log.d(TAG, "type = " + object.getString("type"));
+			ingredient.setType(object.getString("type"));
+			Log.d(TAG, "value = " + object.getString("value"));
+			ingredient.setValue(object.getString("value"));
+			ingredients.add(ingredient);
+		}
+		Log.d(TAG, "After replacing ?++");
+		return ingredients;
+	}
+	
 	
 	public static List<Integer> getListToDelete(String result2) throws JSONException {
 		List<Integer> list = new ArrayList<Integer>();

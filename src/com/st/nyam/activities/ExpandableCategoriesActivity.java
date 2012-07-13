@@ -53,7 +53,7 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 			db = application.getDB();
 			groupData = application.getFirstLayer();
 	        String groupFrom[] = new String[] {"groupName"};
-	        int groupTo[] = new int[] {R.id.expandable_first_layer};
+	        int groupTo[] = new int[] {R.id.groupname};
 	        childData = application.getSecondLayer();
 	        String childFrom[] = new String[] {"levelTwoCat"};
 	        int childTo[] = new int[] {R.id.expandable_second_layer_text};
@@ -70,7 +70,7 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 	            childTo);
 	        setListAdapter(adapter);
 	        
-	        
+	        /*
 	        list.setOnGroupExpandListener(new OnGroupExpandListener() { 
 	        	
 	            @Override 
@@ -78,7 +78,7 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 	            	long groupId = adapter.getGroupId(groupPosition);
 	            	Toast.makeText(getBaseContext(), "Group =  " + adapter.getGroupId(groupPosition), Toast.LENGTH_SHORT).show();
 	            	Log.d(TAG, "Group expanded");
-	            	View v = adapter.getGroupView((int) groupId, true, null, list);
+	            	View v = adapter.getGroupView((int) groupId, false, null, list);
 	            	if (v != null) {
 	            		Log.d(TAG, "View onGroupExpand : " + v);
 	            	} else {
@@ -88,11 +88,10 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 	            	Log.d(TAG, "txt: " + txt.getText());
 	            	txt.setText("Tru-ru-ru");
 	            	Log.d(TAG, "txt: " + txt.getText());
-	            	v.setBackgroundColor(R.color.orange_expanded_upper);
-	            	adapter.notifyDataSetChanged();
+	     
 	            } 
 	        }); 
-
+	         */
 	        list.setOnGroupCollapseListener(new OnGroupCollapseListener() { 
 	            @Override 
 	            public void onGroupCollapse(int groupPosition) { 
@@ -115,6 +114,8 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 			return super.onChildClick(parent, v, groupPosition, childPosition, id);
 		}
 		
+		/*
+		
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
 			com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
@@ -124,16 +125,19 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 			catalogItem.setVisible(false);
 			return super.onCreateOptionsMenu(menu);
 		}
+		*/
 		
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 			Log.d(TAG, "In onOptionsItemSelected");
 			Log.d(TAG, "In item.getItemId() = " + item.getItemId());
 			switch(item.getItemId())  {
+				/*
 				case 2131099773: 
 					Log.d(TAG, "menu_search");
 					onSearchRequested();
 					return true;
+					*/
 				case 16908332: 
 					Log.d(TAG, "logo");
 					startActivity(new Intent(this, DashboardActivity.class));
@@ -143,7 +147,7 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 			}		
 		}
 		
-	
+		/*
 		@Override
 		public boolean onSearchRequested() {
 		    Bundle appData = new Bundle();
@@ -152,6 +156,6 @@ public class ExpandableCategoriesActivity extends SherlockExpandableListActivity
 		    startSearch(null, false, appData, false);
 		    return true;
 		}
-
-
+		 */
+		 
 	}

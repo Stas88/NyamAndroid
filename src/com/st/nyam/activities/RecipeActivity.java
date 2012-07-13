@@ -142,6 +142,9 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					((Recipe) recipeGeneral).setSteps(steps);
 				}
 				lastDesc = viewDescriptionRecipe;
+				if (((Recipe) recipeGeneral).getDescription().equals("")) {
+					recipeView.findViewById(R.id.about).setVisibility(View.GONE);
+				}
 				stepQuantity = steps.size();
 				
 				for (int i = 0; i < stepQuantity; i ++ ) {
@@ -238,7 +241,6 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
         	Button button = (Button)recipeView.findViewById(R.id.add_button);
         	button.setVisibility(View.VISIBLE);
         }
-		
 	}
 	
 	private void showButtonFav() {
@@ -274,7 +276,7 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 			return true;
 		case R.id.end_step: 
 			Log.d(TAG, "end");
-			pager.setCurrentItem(stepQuantity - 1, true);
+			pager.setCurrentItem(stepQuantity, true);
 			return true;
 		case 16908332: 
 			Log.d(TAG, "logo");
@@ -486,7 +488,11 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 
 		@Override
 		protected void onPostExecute(Recipe recipeTemp) {
+			
 			String description = recipeTemp.getDescription();
+			if(description.equals("")) {
+				recipeView.findViewById(R.id.about).setVisibility(View.GONE);
+			}
 			viewDescriptionRecipe.setText(description);
 			Log.d(TAG, "Description = " + recipeTemp.getDescription());
 			userViewRecipe.setText(recipeTemp.getUser());
@@ -532,12 +538,18 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					lastDesc.append("\n");
 					lastDesc.append(Html.fromHtml(s));
 					lastDesc.append("\n" + step.getInstruction());
+					currentStep++;
 				} else {
 					currentStep++;
 					Log.d(TAG, "isFavorites = 1");
 					Log.d(TAG, "Constants.URL + step.getImg_url() = " + Constants.URL + step.getImg_url());
 					Object [] pictures = new Object [] {(String)Constants.URL + step.getImg_url(), (View)viewPictureStep};
 					new DownloadImageStepTask().execute(pictures);
+					
+					recipeTitleStep.setText(recipeGeneral.getTitle());
+					viewStepBody.setText(step.getInstruction());
+					stepNumber.setText(currentStep + "/" + stepQuantity);
+					
 					lastDesc = viewStepBody;
 					pages.add(stepView);
 				}
@@ -589,15 +601,7 @@ private class DownloadImageStepTask extends AsyncTask<Object,Void,Object[]> {
 			return outObjects;
 		}
 		
-		public void onClick(View btn) {
-	        if (btn.isSelected()){
-	            btn.setSelected(false);
-	        }
-	        else {
-	            btn.setSelected(true);
-	        }
-	    }
-
+	
 		
 		@Override 
 		protected void onPostExecute(Object[] result) {

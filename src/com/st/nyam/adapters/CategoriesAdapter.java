@@ -6,12 +6,9 @@ import java.util.Map;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.widget.SimpleExpandableListAdapter;
+
+import com.st.nyam.R;
 import com.st.nyam.activities.ExpandableCategoriesActivity;
 
 
@@ -29,12 +26,12 @@ public class CategoriesAdapter extends SimpleExpandableListAdapter {
 			super(expandableCategoriesActivity,groupData, expandableFirstLayer, groupFrom, groupTo, childData, expandableSecondLayer,childFrom, childTo);
 			context = expandableCategoriesActivity.getBaseContext();
 			this.groupData = groupData; 
-			
 	}
 	
 	
 
-	
+
+
 
 	
 	

@@ -404,7 +404,7 @@ public class HttpFactory  {
 			for (int i : idsParams) {
 				qparams.add(new BasicNameValuePair("ids[]", String.valueOf(i)));
 			}
-		    URI uri = URIUtils.createURI("http", Constants.URL_SHORT, Integer.valueOf(Constants.PORT), Constants.SYNC_PATH,
+		    URI uri = URIUtils.createURI("http", Constants.URL_SHORT, Integer.valueOf(80), Constants.SYNC_PATH,
 		                                 URLEncodedUtils.format(qparams, "UTF-8"), null);
 		    httpget2 = new HttpGet(uri);
 		    //http://www.google.com/search?q=httpclient&btnG=Google+Search&aq=f&oq=
