@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -18,6 +19,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.st.nyam.models.Ingredient;
 import com.st.nyam.models.MainCategory;
 import com.st.nyam.models.Profile;
 import com.st.nyam.models.Recipe;
@@ -38,7 +40,7 @@ public class DataBaseFactory   {
 	// private final String INSERT_RECEPY =
 	// "INSERT into RECEPIES ('id', 'recepy', 'author') VALUES (?, ?, ?)";
 
-	private final String SELECT_RECIPES = "SELECT * FROM recipes";
+	private final String SELECT_RECIPES = "SELECT * FROM recipes ORDER By time_add desc";
 	private final String SELECT_RECIPE_BY_ID = "SELECT * FROM recipes WHERE ID = ?";
 	private final String SELECT_COUNT_RECIPE_BY_ID = "SELECT count(*) FROM recipes WHERE ID = ?";
 	private final String SELECT_STEPS = "SELECT * FROM steps";
@@ -46,6 +48,7 @@ public class DataBaseFactory   {
 	private final String SELECT_ITEM_ID_BY_ID = "SELECT item_id FROM recipes WHERE id = ?";
 	private final String SELECT_STEPS_BY_ID = "SELECT * FROM steps where recipe_id = ?";
 	private final String INSERT_STEP = "INSERT INTO steps ('id', 'recipe_id', 'body', 'photo_file_name') VALUES (?,?,?,?) ";
+	private final String INSERT_INGREDIENT = "INSERT INTO ingredients_recipes ('name', 'value', 'type', 'recipe_id') VALUES (?,?,?,?) ";
 	private final String INSERT_RECIPE = "INSERT INTO recipes ('id', 'title', 'description', 'user_id', 'favorites_by', 'main_photo_file_name', 'rating', 'cooked_dishes_count', 'path', 'item_id') VALUES (?,?,?,?,?,?,?,?,?,?) ";
 	private final String INSERT_PROFILE = "INSERT INTO profile ('img_path', 'name', 'level', 'favorite_dishes', 'hobbies','interests', 'experience', 'about', 'published_recipes', 'added_to_favorites', 'cmments_left', 'voices_left', 'friends' ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 	private final String DELETE_RECIPE = "DELETE FROM recipes WHERE id = ?";
@@ -57,6 +60,8 @@ public class DataBaseFactory   {
 	private final String SELECT_PROFILE = "SELECT * FROM profile";
 	private final String SELECT_MAINCATEGORIES = "SELECT * FROM main_categories WHERE parent_id = ?";
 	private final String SELECT_MAINCATEGORIES_BY_NAME = "SELECT * FROM main_categories WHERE name = ?";
+	
+	private final String SELECT_INGREDIENT_BY_RECIPE = "SELECT * FROM ingredients_recipes WHERE recipe_id = ?";
 	
 	public DataBaseFactory(Context ctx) {
 		context = ctx;
@@ -207,6 +212,7 @@ public class DataBaseFactory   {
 		Log.d(TAG, "recipe item_id:" + recipe.getItem_id());
 		if (!isRecipeExists(recipe.getId())) {
 			ArrayList<Step> steps = recipe.getSteps();
+			ArrayList<Ingredient> ingredients = recipe.getIngredients();
 			Log.d(TAG, "Adding  recipe to favorites addRecipeToFavorites()");
 			sdUtil.saveRecipeImage(bitmap, recipe.getImg_url());
 			db.execSQL(
@@ -228,6 +234,13 @@ public class DataBaseFactory   {
 				}
 			} else {
 				Log.d(TAG, "No steps in this recipe");
+			}
+			if (recipe.getIngredients() != null) {
+				for (Ingredient in : ingredients) {
+					addIngredientToFavorites(in, recipe.getId());
+				}
+			} else {
+				Log.d(TAG, "No ingredients in this recipe");
 			}
 		} else {
 			Log.d(TAG, "Рецепт уже добавлен");
@@ -279,6 +292,12 @@ public class DataBaseFactory   {
 		db.execSQL(INSERT_STEP,new String[] { Integer.toString(step.getNumber()),
 						Integer.toString(recipe_id), step.getInstruction(),
 						step.getImg_url(), });
+	}
+	
+	private void addIngredientToFavorites(Ingredient ingredient, int recipe_id) {
+		db.execSQL(INSERT_INGREDIENT, new String[] {
+				ingredient.getName(), ingredient.getValue(),ingredient.getType(),
+						String.valueOf(recipe_id)});
 	}
 	
 	public ArrayList<MainCategory> getMainCategories(int parentId) {
@@ -443,6 +462,28 @@ public class DataBaseFactory   {
 			}
 		}
 		return recipe;
+	}
+	
+	public List<Ingredient> getIngredientsByRecipeId(int id) throws ParseException {
+		List<Ingredient> ingredients = new ArrayList<Ingredient>();
+		Cursor c = db.rawQuery(SELECT_INGREDIENT_BY_RECIPE,
+				new String[] { Integer.toString(id) });
+		try {
+			Log.d(TAG, "getIngredientsByRecipeId before c.movetoFirst()");
+			if (c.moveToFirst()) {
+				do {
+					Log.d(TAG, "Checking passed");
+					Ingredient ingredient = ModelUtil.getIngredientFromCursor(c);
+					Log.d(TAG, "Ingredient: " + ingredient.toString());
+					ingredients.add(ingredient);
+				} while (c.moveToNext());
+			}
+		} finally {
+			if (c != null) {
+				c.close();
+			}
+		}
+		return ingredients;
 	}
 
 	private class DownloadImageStep extends AsyncTask<Object, Void, Object> {

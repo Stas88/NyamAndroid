@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.st.nyam.factories.DataBaseFactory;
 import com.st.nyam.models.RecipeGeneral;
 import com.st.nyam.util.Constants;
 import com.st.nyam.util.listUtil.ImageLoader;
+import com.st.nyam.util.listUtil.ImageSDCardLoader;
 
 public class LazyAdapter extends ArrayAdapter<RecipeGeneral> {
     
@@ -27,6 +29,7 @@ public class LazyAdapter extends ArrayAdapter<RecipeGeneral> {
     private ArrayList<RecipeGeneral> recipes = null;
     private static LayoutInflater inflater=null;
     public ImageLoader imageLoader; 
+    public ImageSDCardLoader imageSDCardLoader; 
     private NyamApplication application;
 	private DataBaseFactory db;
    
@@ -36,6 +39,7 @@ public class LazyAdapter extends ArrayAdapter<RecipeGeneral> {
 		super(context, layoutResourceId, recipes);
 		this.layoutResourceId = layoutResourceId;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    imageSDCardLoader = new ImageSDCardLoader(context.getApplicationContext());
         imageLoader = new ImageLoader(context.getApplicationContext());
 		this.context = context;
 		this.recipes = recipes;
@@ -74,14 +78,20 @@ public class LazyAdapter extends ArrayAdapter<RecipeGeneral> {
         
         ratingView.setText(String.valueOf(recipe.getRating()));
         cooked_dishesView.setText(String.valueOf(recipe.getCooked_dishes_count()));
-        if (db.isRecipeExists(recipe.getId())) {
+        if (!isFavorites) {
+	        if (db.isRecipeExists(recipe.getId())) {
+	        	ImageView favorites = (ImageView)row.findViewById(R.id.icon_little3);
+	        	Drawable yellow_star = context.getResources().getDrawable(R.drawable.favorites_yellow);
+	        	favorites.setImageDrawable(yellow_star);
+	        } else {
+	        	ImageView favorites = (ImageView)row.findViewById(R.id.icon_little3);
+	        	Drawable dark_star = context.getResources().getDrawable(R.drawable.favorite_dark);
+	        	favorites.setImageDrawable(dark_star);
+	        }
+        } else {
         	ImageView favorites = (ImageView)row.findViewById(R.id.icon_little3);
         	Drawable yellow_star = context.getResources().getDrawable(R.drawable.favorites_yellow);
         	favorites.setImageDrawable(yellow_star);
-        } else {
-        	ImageView favorites = (ImageView)row.findViewById(R.id.icon_little3);
-        	Drawable dark_star = context.getResources().getDrawable(R.drawable.favorite_dark);
-        	favorites.setImageDrawable(dark_star);
         }
         /*
         if (isFavorites == true ) {
@@ -93,12 +103,21 @@ public class LazyAdapter extends ArrayAdapter<RecipeGeneral> {
         			Environment.getExternalStorageDirectory().toString() + 
         			"/Nyam/NyamRecipesFavorites/" + recipe.getImg_url().replace('/', '&'));
         	Log.d(TAG, "Bitmap: "  + bitmap);
-        	imgIcon.setImageBitmap(bitmap);ыеги
-        } else {
+        	imgIcon.setImageBitmap(bitmap);
+        } 
         */
-    	Log.d(TAG, "Not favorite");
-    	imageLoader.displayImage(Constants.URL+recipe.getImg_url(), imgIcon, isFavorites, recipe);
-    	Log.d(TAG, "URL+recipe.getImg_url()" + Constants.URL+recipe.getImg_url());
+        if (isFavorites) {
+        	Log.d(TAG, "Favorite");
+        	String url = Environment.getExternalStorageDirectory().toString() + 
+        			"/Nyam/NyamRecipesFavorites/" + recipe.getImg_url().replace('/', '&');
+	    	imageSDCardLoader.displayImage(url, imgIcon, isFavorites, recipe);
+	    	Log.d(TAG, "URL+recipe.getImg_url()" + Constants.URL+recipe.getImg_url());
+        } else {
+	    	Log.d(TAG, "Not favorite");
+	    	imageLoader.displayImage(Constants.URL+recipe.getImg_url(), imgIcon, isFavorites, recipe);
+	    	Log.d(TAG, "URL+recipe.getImg_url()" + Constants.URL+recipe.getImg_url());
+        }
+        
         //}
         //if (position == getCount() - 1) {
             //loadNextPage();

@@ -1,8 +1,9 @@
 package com.st.nyam.models;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Ingredient {
+
+public class Ingredient implements Serializable {
 
 	private int id;
 	private String name;
@@ -67,7 +68,7 @@ public class Ingredient {
 		return "Ingredient [id=" + id + ", name=" + name + ", value=" + value
 				+ ", type=" + type + ", recipe_id=" + recipe_id + "]";
 	}
-	
+
 	
 	
 

@@ -27,13 +27,5 @@ public class CategoriesAdapter extends SimpleExpandableListAdapter {
 			context = expandableCategoriesActivity.getBaseContext();
 			this.groupData = groupData; 
 	}
-	
-	
-
-
-
-
-	
-	
 
 }

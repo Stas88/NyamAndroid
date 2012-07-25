@@ -1,0 +1,41 @@
+
+	<FrameLayout 
+  			   xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:id="@+id/ingredients_frame"
+			    android:layout_width="fill_parent"
+			    android:paddingLeft="10dp"
+				android:paddingRight="10dp"
+			    android:layout_height="wrap_content"
+			    android:background="@color/expanded_background" >
+		
+			    <TextView
+			        android:id="@+id/text"
+			        android:layout_width="fill_parent"
+			        android:layout_height="match_parent"
+			        android:layout_gravity="center"
+			        android:singleLine="true"
+			        android:background="@color/expanded_background"
+			        android:text="......................................................................................................................................................................"
+			        android:textColor="@color/dark_orange"
+			        android:textSize="18dip"/>
+			
+			    <TextView
+			        android:id="@+id/ingredient_name"
+			        android:layout_width="wrap_content"
+			        android:layout_height="match_parent"
+			        android:layout_gravity="left"
+
+			        android:background="@color/expanded_background"
+			  		android:text="@string/friends_total"
+			  		android:textColor="@color/dark_orange"
+			        android:textSize="18dip" />
+			
+			    <TextView
+			        android:id="@+id/ingredient_data"
+			        android:layout_width="wrap_content"
+			        android:layout_height="match_parent"
+			        android:layout_gravity="right"
+			        android:background="@color/expanded_background"
+			        android:textColor="@color/dark_orange"
+			        android:textSize="18dip" />
+		</FrameLayout>			

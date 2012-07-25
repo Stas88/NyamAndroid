@@ -23,7 +23,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -37,6 +40,7 @@ import com.st.nyam.adapters.StepPagerAdapter;
 import com.st.nyam.factories.ApiFactory;
 import com.st.nyam.factories.DataBaseFactory;
 import com.st.nyam.factories.HttpFactory;
+import com.st.nyam.models.Ingredient;
 import com.st.nyam.models.Recipe;
 import com.st.nyam.models.RecipeGeneral;
 import com.st.nyam.models.Step;
@@ -71,6 +75,7 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 	private View recipeView;
 	private TextView viewRatingRecipe;
 	private TextView viewCooked_dishesRecipe;
+	private TextView about; 
 	
 	private TextView viewStepBody;
 	private TextView stepNumber;
@@ -81,9 +86,17 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 	private int stepQuantity;
 	private TextView lastDesc;
 	private ProgressDialog progDailog;
+	private Bitmap bitmapToPass;
 
 	
-	
+	private ArrayList<Ingredient> ingredients;
+	private boolean isExpanded = false;
+	private TextView ingredientsNameV;
+	private TextView ingredientsDataV;
+	private LinearLayout ingredientsLinear;
+	private RelativeLayout ingredientsRelative;
+	private RelativeLayout mainRelative;
+	private ImageView  orangeCircle;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -121,10 +134,13 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 			if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
 				Log.d(TAG, "Recipe favorites");
 				//delete_button.setVisibility(View.VISIBLE);
+				ingredients = (ArrayList<Ingredient>) db.getIngredientsByRecipeId(recipeGeneral.getId());
+				fillIngredietns(ingredients);
 				Bitmap bitmapViewPicture = BitmapFactory.decodeFile(Environment
 						.getExternalStorageDirectory().toString()
 						+ "/Nyam/NyamRecipesFavorites/"
 						+ recipeGeneral.getImg_url().replace('/', '&'));
+				bitmapToPass = bitmapViewPicture;
 				Log.d(TAG, "recipeGeneral.getImg_url().replace('/', '&'): " + recipeGeneral.getImg_url().replace('/', '&'));
 				Log.d(TAG, "Bitmap = " + bitmapViewPicture);
 				viewPictureRecipe.setImageBitmap(bitmapViewPicture);
@@ -138,6 +154,8 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 				userViewRecipe.setText(((Recipe) recipeGeneral).getUser());
 				Log.d(TAG, "User = " + ((Recipe) recipeGeneral).getUser());
 				steps = db.getStepsByRecipeId(recipeGeneral.getId());
+				
+				
 				if (steps != null) {
 					((Recipe) recipeGeneral).setSteps(steps);
 				}
@@ -183,6 +201,7 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 				setSupportProgressBarIndeterminateVisibility(false);
 				Log.d(TAG, "setSupportProgressBarIndeterminateVisibility(false);");
 				showButtonFav();
+				//prepareIngredients();
 			} else {
 				Log.d(TAG,"Recipe not favorites");
 				Log.d(TAG, "recipeGeneral else  = " + recipeGeneral.toString());
@@ -220,6 +239,31 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 		viewRatingRecipe = (TextView) recipeView.findViewById(R.id.txtTitle2);
 		viewCooked_dishesRecipe = (TextView) recipeView.findViewById(R.id.txtTitle1);
 		userViewRecipe = (TextView) recipeView.findViewById(R.id.author_name);
+		ingredientsLinear = (LinearLayout)recipeView.findViewById(R.id.ingredients_linear);
+		ingredientsRelative = (RelativeLayout)recipeView.findViewById(R.id.ingredients_relative);
+		about =  (TextView)recipeView.findViewById(R.id.about);
+		orangeCircle = (ImageView)recipeView.findViewById(R.id.circle);
+		orangeCircle.setBackgroundResource(R.drawable.expander_ic_minimized1);
+		mainRelative = (RelativeLayout)recipeView.findViewById(R.id.main_relative);
+		
+		RelativeLayout relativeclic1 = (RelativeLayout)recipeView.findViewById(R.id.layoutClick);
+        relativeclic1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(isExpanded) {
+                	Log.d(TAG, "isExpanded");
+                	ingredientsRelative.setVisibility(View.GONE);
+                	isExpanded = false;
+                	orangeCircle.setBackgroundResource(R.drawable.expander_ic_minimized1);
+                }
+                else {
+                	Log.d(TAG, "not isExpanded");
+                	ingredientsRelative.setVisibility(View.VISIBLE);
+                	isExpanded = true;
+                	orangeCircle.setBackgroundResource(R.drawable.expander_ic_maximized1);
+                }
+            }
+        });
 	}
 
 	@Override
@@ -255,9 +299,58 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
         	Button button = (Button)recipeView.findViewById(R.id.add_button);
         	button.setVisibility(View.VISIBLE);
         }
-		
 	}
 	
+	/*
+	private void prepareIngredients() {
+		  SimpleExpandableListAdapter adapter;
+		  final ExpandableListView list = (ExpandableListView)recipeView.findViewById(R.id.elvMain);
+		  
+		  ArrayList<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
+		  Map m  = new HashMap<String, String>();
+		  m.put("groupName", "Ингридиенты");
+		  groupData.add(m);
+		  
+		  
+	      String groupFrom[] = new String[] {"groupName"};
+	      
+	      int groupTo[] = new int[] {R.id.groupname};
+	     
+	      
+		 ArrayList<ArrayList<Map<String, String>>> childData = new ArrayList<ArrayList<Map<String, String>>>();
+		 ArrayList<Map<String, String>> childDataItem = new ArrayList<Map<String, String>>();
+	     for (Ingredient i : ingredients) {
+	    	    Log.d(TAG, "Ingridient: " + i);
+			    Map<String, String> m1 = new HashMap<String, String>();
+			    StringBuilder ingredientsString = new StringBuilder();
+			    String v = i.getValue();
+				if (!v.equals("null")) {
+					ingredientsString.append("- " + i.getName() + " " + v + i.getType());
+				} else {
+					ingredientsString.append("- " + i.getName() + " " + i.getType());
+				}
+			    m1.put("levelTwoCat", ingredientsString.toString());
+			    childDataItem.add(m1);
+	     }
+	     childData.add(childDataItem);
+	     
+	     String childFrom[] = new String[] {"levelTwoCat"};
+	     int childTo[] = new int[] {R.id.ingredients_second_layer_text};
+	     
+	     adapter = new SimpleExpandableListAdapter (
+		            this,
+		            groupData,
+		            R.layout.ingredients_first_layer,
+		            groupFrom,
+		            groupTo,
+		            childData,
+		            R.layout.ingredients_second_layer,
+		            childFrom,
+		            childTo);
+		
+		 list.setAdapter(adapter);       
+	}
+	*/
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int current = pager.getCurrentItem();
@@ -292,7 +385,6 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 		case R.id.add_button:
 			Log.d(TAG, "Pressed save to favorites");
 			if (!action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
-				
 					Log.d(TAG, "Add button pressed Network eavailable");
 					if (NyamApplication.isPasswordExists()) {
 						Log.d(TAG, "application.isPasswordExists(): " + application.isPasswordExists());
@@ -349,6 +441,7 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					Log.d(TAG, "Result_OK sent");
 				}
 			}
+		   
 			else {
 				Log.d(TAG, "Delete button pressed");
 					Log.d(TAG, "Delete button pressed Network eavailable");
@@ -368,6 +461,16 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					}
 			}
 		break;
+		/*
+		case R.id.show_ingredients:
+			Log.d(TAG, "Pressed show Ingredients");
+			Intent intentIngredients = new Intent(this,
+					IngredientsActivity.class);
+			intentIngredients.putExtra("ingredients", ingredients);
+			intentIngredients.putExtra("bitmap", bitmapToPass);
+			startActivity(intentIngredients);
+			break;
+			*/
 		}
 		
 	}
@@ -449,6 +552,25 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 	}
 	*/
 	
+	private void fillIngredietns(List<Ingredient> ingredients) {
+		LayoutInflater inflater1 = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		for (int i = 0; i < ingredients.size(); i++ ) {
+				Ingredient in = ingredients.get(i); 
+				FrameLayout ingredients_frame = (FrameLayout)inflater1.inflate(R.layout.ingredient_frame_layout, null);
+			    ingredientsNameV = (TextView)ingredients_frame.findViewById(R.id.ingredient_name);
+			    ingredientsDataV = (TextView)ingredients_frame.findViewById(R.id.ingredient_data);
+			    String v = in.getValue();
+			    ingredientsNameV.setText(in.getName());
+				if (!v.equals("null")) {
+					ingredientsDataV.setText(v + " " +  in.getType());
+				} else {
+					ingredientsDataV.setText(in.getType());
+				}
+				ingredientsLinear.addView(ingredients_frame);
+		 }
+		
+	}
+	
 	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
 		@Override
@@ -457,6 +579,7 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 				InputStream in = new java.net.URL(picture).openStream();
 				bitmap = BitmapFactory.decodeStream(new SanInputStream(in));
 				// viewPicture.setImageBitmap(bitmap);
+				bitmapToPass = bitmap;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -488,6 +611,8 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 
 		@Override
 		protected void onPostExecute(Recipe recipeTemp) {
+			ingredients = recipeTemp.getIngredients();
+			fillIngredietns(ingredients);
 			
 			String description = recipeTemp.getDescription();
 			if(description.equals("")) {
@@ -553,6 +678,7 @@ public class RecipeActivity extends SherlockFragmentActivity implements EditName
 					lastDesc = viewStepBody;
 					pages.add(stepView);
 				}
+				
 				
 				/*
 				if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {

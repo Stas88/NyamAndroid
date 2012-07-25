@@ -13,7 +13,6 @@
            android:layout_alignParentLeft="true"/>
     
     <TextView android:id="@+id/expandable_second_layer_text"
-         android:textStyle="bold"
          android:textSize="20dp"
          android:paddingLeft="50dp"
          android:paddingRight="50dp"

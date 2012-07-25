@@ -13,15 +13,16 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.st.nyam.NyamApplication;
 import com.st.nyam.R;
 import com.st.nyam.activities.DialogFragmentActivity.EditNameDialogListener;
@@ -40,6 +41,7 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Display mDisplay = this.getWindowManager().getDefaultDisplay();
+		getSupportActionBar().hide();
 		int width = mDisplay.getWidth();
 		int height = mDisplay.getHeight();
 
@@ -57,7 +59,6 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 		v.setBackgroundDrawable(drawable);
 		super.onCreate(savedInstanceState);
 		setContentView(v);
-		getSupportActionBar().hide();
 		application = (NyamApplication) getApplication();
 		db = application.getDB();
 	}
@@ -219,5 +220,28 @@ public class DashboardActivity extends SherlockFragmentActivity implements EditN
 		}
 		return dialogCurrent;
 	}
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.dashboard_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
 
+   
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId())  {
+			case R.id.exit: 
+				Intent intent = new Intent(Intent.ACTION_MAIN);
+				intent.addCategory(Intent.CATEGORY_HOME);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}		
+	}
+	
 }

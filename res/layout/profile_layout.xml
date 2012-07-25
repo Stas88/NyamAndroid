@@ -203,7 +203,10 @@
 			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
 			    android:layout_below="@+id/statistic_separator"
-			    android:padding="15dp"
+			    android:paddingLeft="15dp"
+			    android:paddingRight="15dp"
+			    android:paddingTop="5dp"
+			    android:paddingBottom="5dp"
 			    android:background="@android:color/white" >
 			
 			    <TextView
@@ -246,7 +249,10 @@
 			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
 			    android:layout_below="@id/published_recepies_frame"
-			    android:padding="15dp"
+			    android:paddingLeft="15dp"
+			    android:paddingRight="15dp"
+			    android:paddingTop="5dp"
+			    android:paddingBottom="5dp"
 			    android:background="@android:color/white" >
 			
 			    <TextView
@@ -289,7 +295,10 @@
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"
 				    android:layout_below="@+id/added_to_favorites_frame"
-				    android:padding="15dp"
+				    android:paddingLeft="15dp"
+				    android:paddingRight="15dp"
+				    android:paddingTop="5dp"
+				    android:paddingBottom="5dp"
 				    android:background="@android:color/white" >
 			
 			    <TextView
@@ -331,7 +340,10 @@
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"
 				    android:layout_below="@+id/comments_left_frame"
-				    android:padding="15dp"
+				    android:paddingLeft="15dp"
+				    android:paddingRight="15dp"
+				    android:paddingTop="5dp"
+				    android:paddingBottom="5dp"
 				    android:background="@android:color/white" >
 			
 			    <TextView
@@ -374,7 +386,10 @@
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"
 				    android:layout_below="@+id/voices_left_frame"
-				    android:padding="15dp"
+				    android:paddingLeft="15dp"
+				    android:paddingRight="15dp"
+				    android:paddingTop="5dp"
+				    android:paddingBottom="5dp"
 				    android:background="@android:color/white" >
 			
 			    <TextView

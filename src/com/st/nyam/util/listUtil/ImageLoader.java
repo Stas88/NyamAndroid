@@ -26,13 +26,13 @@ import com.st.nyam.R;
 import com.st.nyam.models.RecipeGeneral;
 
 public class ImageLoader {
-	
-	private final static String TAG = "ImageLoader";
+
+private final static String TAG = "ImageLoader";
     
     MemoryCache memoryCache = new MemoryCache();
     FileCache fileCache;
     private Map<ImageView, String> imageViews= Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
-    ExecutorService executorService; 
+    ExecutorService executorService;
     //final int stub_id = R.drawable.stub;
     
     public ImageLoader(Context context){
@@ -42,33 +42,33 @@ public class ImageLoader {
     
     public void displayImage(String url, ImageView imageView, boolean isFavorites, RecipeGeneral recipe)
     {	
-    	Log.d(TAG, "displayImage() 1"); 
+     Log.d(TAG, "displayImage() 1");
         imageViews.put(imageView, url);
         Log.d(TAG, "displayImage() 2");
         Bitmap bitmap = memoryCache.get(url);
         Log.d(TAG, "displayImage() 3");
         if(bitmap != null) {
-        	Log.d(TAG, "displayImage() 4");
+         Log.d(TAG, "displayImage() 4");
             imageView.setImageBitmap(bitmap);
         }
         else {
-        	if(!isFavorites) {
-	        	Log.d(TAG, "displayImage() 5");
-	            queuePhoto(url, imageView);
-	            Log.d(TAG, "displayImage() 6");
-	            //imageView.setImageResource(stub_id);
-	            Log.d(TAG, "displayImage() 7");
-        	} else {
-        		Log.d(TAG, "isFavorites: "  + isFavorites);
-            	Log.d(TAG, "Recipe.getImg_url()"  + recipe.getImg_url());
-            	Log.d(TAG, "Path to image : "  + Environment.getExternalStorageDirectory().toString() + 
-            			"/Nyam/NyamRecipesFavorites/" + recipe.getImg_url().replace('/', '&'));
-            	Bitmap bitmap1 = BitmapFactory.decodeFile(
-            			Environment.getExternalStorageDirectory().toString() + 
-            			"/Nyam/NyamRecipesFavorites/" + recipe.getImg_url().replace('/', '&'));
-            	Log.d(TAG, "Bitmap: "  + bitmap1);
-            	imageView.setImageBitmap(bitmap1);
-        	}
+         if(!isFavorites) {
+			Log.d(TAG, "displayImage() 5");
+			queuePhoto(url, imageView);
+			Log.d(TAG, "displayImage() 6");
+			//imageView.setImageResource(stub_id);
+			Log.d(TAG, "displayImage() 7");
+         } else {
+         Log.d(TAG, "isFavorites: " + isFavorites);
+             Log.d(TAG, "Recipe.getImg_url()" + recipe.getImg_url());
+             Log.d(TAG, "Path to image : " + Environment.getExternalStorageDirectory().toString() +
+             "/Nyam/NyamRecipesFavorites/" + recipe.getImg_url().replace('/', '&'));
+             Bitmap bitmap1 = BitmapFactory.decodeFile(
+             Environment.getExternalStorageDirectory().toString() +
+             "/Nyam/NyamRecipesFavorites/" + recipe.getImg_url().replace('/', '&'));
+             Log.d(TAG, "Bitmap: " + bitmap1);
+             imageView.setImageBitmap(bitmap1);
+         }
         }
     }
         
@@ -78,7 +78,7 @@ public class ImageLoader {
         executorService.submit(new PhotosLoader(p));
     }
     
-    private Bitmap getBitmap(String url) 
+    private Bitmap getBitmap(String url)
     {
         File f=fileCache.getFile(url);
         
@@ -142,7 +142,7 @@ public class ImageLoader {
         public String url;
         public ImageView imageView;
         public PhotoToLoad(String u, ImageView i){
-            url=u; 
+            url=u;
             imageView=i;
         }
     }

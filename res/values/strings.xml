@@ -34,5 +34,8 @@
     <string name="voices_left">Оставлено голосов</string>
     <string name="friends_total">Друзей</string>
     <string name="dots">...........................................................................................13</string>
-    <string name="dots1">.........</string>
+    
+    <string name="exit">Выход</string>
+    <string name="ingredients">Ингредиенты</string>
+    <string name="no_results">Нет результатов</string>
 </resources>

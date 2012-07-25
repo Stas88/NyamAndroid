@@ -23,11 +23,10 @@
 	    <TextView android:id="@+id/recipe_title"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:textSize="23dp"
+	        android:textSize="28dp"
 	        android:layout_alignParentLeft="true"
 	        android:layout_alignParentTop="true"
-	        android:textColor="#9d9d9d"
-	        android:textStyle="bold"
+	        android:textColor="@android:color/black"
 	        android:layout_marginTop="4dp"/>
     
 	    <TextView android:id="@+id/step_word"

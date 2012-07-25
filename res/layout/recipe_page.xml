@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
     
 	<ScrollView
@@ -8,6 +8,7 @@
     	android:layout_height="fill_parent">
     	
 		<RelativeLayout 
+		    android:id="@+id/main_relative"
     		android:layout_width="fill_parent"
     		android:layout_height="fill_parent">
     		
@@ -122,7 +123,7 @@
 			       android:layout_width="wrap_content"
 			       android:layout_height="wrap_content"
 			       android:textSize="22dp"
-			       android:layout_marginTop="16dp"
+			       android:layout_marginTop="24dp"
 			       android:layout_below="@+id/rl"
 			       android:textColor="#6f6f6f"
 			       android:text="@string/author"/> 
@@ -131,12 +132,106 @@
 		        	android:layout_width="wrap_content"
 		        	android:layout_height="wrap_content"
 			        android:textSize="22dp"
-			        android:layout_marginTop="16dp"
+			        android:layout_marginTop="24dp"
 			        android:textColor="#000000"
 			        android:paddingLeft="3dp"
 			        android:layout_toRightOf="@+id/user"
 			        android:layout_below="@+id/rl"/> 
-        
+			   </RelativeLayout>
+				
+			   <RelativeLayout 
+                    android:id="@+id/layoutClick"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_below="@+id/under_picture_layout"
+				    android:layout_marginTop="16dp"
+				    android:background="@drawable/expandable_second_layer_selector"
+				     >
+
+                		<ImageView
+                		    android:id="@+id/circle"
+                		    android:layout_alignParentLeft="true"
+                		    android:layout_centerVertical="true"
+				            android:layout_width="wrap_content"
+				            android:layout_marginLeft="8dp"
+				            android:layout_height="wrap_content">
+                		</ImageView>
+				
+				        <TextView
+				            android:id="@+id/groupname"
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:layout_centerHorizontal="true"
+				            android:gravity="center_vertical"
+				            android:minHeight="?android:attr/listPreferredItemHeight"
+				            android:layout_marginLeft="40dp"
+				            android:textAppearance="?android:attr/textAppearanceLarge"
+				            android:textSize="20dp"
+				            android:textColor="@color/dark_orange"
+				            android:text="@string/ingredients"
+				            android:textStyle="bold" />
+				        
+				       
+						<View
+						    android:id="@+id/bottom_line"
+						    android:layout_width="fill_parent"
+						    android:layout_height="1dip"
+						    android:background="#000000"
+						    android:layout_alignParentBottom="true"
+						/>
+						
+						 <View
+						    
+						    android:layout_width="fill_parent"
+						    android:layout_height="1dip"
+						    android:background="#000000"
+						    android:layout_alignParentTop="true"
+						/>
+
+
+   			 		<View
+						    android:id="@+id/bottom_line"
+						    android:layout_width="fill_parent"
+						    android:layout_height="1dip"
+						    android:background="#000000"
+						    android:layout_alignParentBottom="true"
+						/>
+   			 </RelativeLayout>
+   			 
+			   <RelativeLayout 
+			       android:id="@+id/ingredients_relative"
+				    android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+				    android:layout_below="@+id/layoutClick"
+				    android:visibility="gone">
+			   
+				    <LinearLayout 
+	                    android:id="@+id/ingredients_linear"
+	                    android:paddingTop="8dp"
+					    android:layout_width="fill_parent"
+					    android:layout_height="wrap_content"
+					    android:layout_below="@+id/layoutClick"
+					    android:orientation="vertical"
+					    android:paddingBottom="8dp"
+					    android:background="@color/expanded_background"
+					     >
+				    </LinearLayout>
+				    
+				    <View
+					    android:id="@+id/bottom_line"
+					    android:layout_width="fill_parent"
+					    android:layout_height="1dip"
+					    android:background="#000000"
+					    android:layout_alignParentBottom="true"
+					/>
+			    </RelativeLayout>
+			    <RelativeLayout 
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+				    android:layout_below="@+id/ingredients_relative"
+				    android:paddingLeft="10dp"
+					android:paddingRight="10dp">
+						 
 			    <TextView android:id="@+id/about"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
@@ -144,7 +239,7 @@
 			        android:layout_marginTop="10dp"
 			        android:textColor="#6f6f6f"
 			        android:textStyle="bold"
-			        android:layout_below="@+id/user"
+			        android:layout_below="@+id/ingredients_relative"
 			        android:text="@string/about"/> 
         
 			    <TextView android:id="@+id/recepy_description"
@@ -158,24 +253,9 @@
      		</RelativeLayout>
 
 	    
- 
+ 	 			
 		</RelativeLayout>
 	</ScrollView>
 	
-	<Button android:id="@+id/delete_button"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Delete"
-           android:visibility="gone"
-           android:layout_alignParentBottom="true"
-           android:onClick="onClick"/>
-	
-	<Button android:id="@+id/add_button"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Add"
-           android:visibility="gone"
-           android:layout_alignParentBottom="true"
-           android:onClick="onClick"/>
-	 
+
 </RelativeLayout>

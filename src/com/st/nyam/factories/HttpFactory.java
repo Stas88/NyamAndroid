@@ -68,10 +68,11 @@ public class HttpFactory  {
 		
 			// Prepare a request object
 			Log.d(TAG, "REQUEST: " + url);
-			HttpGet httpGet = new HttpGet(url);
-			// Execute the request
-			HttpResponse response;
 			try {
+				HttpGet httpGet = new HttpGet(url);
+				// Execute the request
+				HttpResponse response;
+			
 				// Open the webpage.
 				response = httpclient.execute(httpGet);
 				if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
@@ -98,6 +99,8 @@ public class HttpFactory  {
 				}
 			} catch (ClientProtocolException e) {
 				Log.d(TAG, "Connection failed; " + e.getMessage());
+			} catch (IllegalArgumentException e) {
+					Log.d(TAG, "Connection failed; " + e.getMessage()); 
 			} catch (IOException e) {
 				Log.d(TAG, "Connection failed; " + e.getMessage());
 			}

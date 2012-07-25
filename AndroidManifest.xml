@@ -60,6 +60,11 @@
             android:configChanges="orientation"
 	        android:name=".activities.ProfileActivity" >
         </activity>
+        <activity android:theme="@style/Theme.NyamTheme"
+       
+	        android:name=".activities.IngredientsActivity" >
+        </activity>
+        
         <service android:name=".services.SynchronizeService" />
         <service android:name=".services.ConstantSynchronizationService" />
       

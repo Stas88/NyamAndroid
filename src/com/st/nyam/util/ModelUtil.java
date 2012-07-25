@@ -60,7 +60,6 @@ public class ModelUtil {
 
 	public static Profile getProfileFromCursor(Cursor c) {
 		Profile profile = new Profile();
-		
 		Log.d(TAG, "img_path = " + c.getString(c.getColumnIndex("img_path")));
 		profile.setImg_path(c.getString(c.getColumnIndex("img_path")));
 		Log.d(TAG, "name = " + c.getString(c.getColumnIndex("name")));
@@ -90,28 +89,22 @@ public class ModelUtil {
 		profile.setFriends(c.getInt(c.getColumnIndex("friends")));
 		return profile;
 	}
+	
 	public static Step getStepFromCursor(Cursor c) throws ParseException {
 		Step step = new Step();
 		step.setNumber(c.getInt(c.getColumnIndex("id")));
 		step.setInstruction(c.getString(c.getColumnIndex("body")));
 		step.setImg_url(c.getString(c.getColumnIndex("photo_file_name")));
-		/*
-		 * step.setPhoto_content_type(c.getString(c.getColumnIndex(
-		 * "photo_content_type")));
-		 * step.setPhoto_file_size(c.getInt(c.getColumnIndex
-		 * ("photo_file_size"))); step.setPhoto_updated_at(new
-		 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss"
-		 * ).parse(c.getString(c.getColumnIndex("photo_updated_at"))));
-		 * step.setCreated_at(new
-		 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(c
-		 * .getString(c.getColumnIndex("created_at")))); step.setUpdated_at(new
-		 * SimpleDateFormat
-		 * ("yyyy-MM-dd HH:mm:ss").parse(c.getString(c.getColumnIndex
-		 * ("updated_at"))));
-		 * step.setPhoto_processing(c.getInt(c.getColumnIndex(
-		 * "photo_processing")));
-		 */
 		return step;
+	}
+	
+	public static Ingredient getIngredientFromCursor(Cursor c) throws ParseException {
+		Ingredient ingredient = new Ingredient();
+		ingredient.setName(c.getString(c.getColumnIndex("name")));
+		ingredient.setValue(c.getString(c.getColumnIndex("value")));
+		ingredient.setType(c.getString(c.getColumnIndex("type")));
+		ingredient.setRecipe_id(c.getInt(c.getColumnIndex("recipe_id")));
+		return ingredient;
 	}
 
 	public static Recipe getRecipeFromCursor(Cursor c) {
@@ -204,6 +197,8 @@ public class ModelUtil {
 		recipe.setImg_url(object.getString("img_url"));
 		Log.d(TAG, "path = " + object.getString("path"));
 		recipe.setPath(object.getString("path"));
+		List<Ingredient> ingredients = getIngredientsFromJSON(object);
+		recipe.setIngredients((ArrayList)ingredients);
 		return recipe;
 	}
 	
@@ -258,16 +253,18 @@ public class ModelUtil {
 		Log.d(TAG, "ingredientObject = " + object.toString());
 		
 		JSONArray ingredientsArray = object.getJSONArray("ingredients");
+		Log.d(TAG, "ingredientsArray = " + object.getJSONArray("ingredients"));
 		for(int i = 0; i < ingredientsArray.length(); i ++) {
+			JSONObject in = ingredientsArray.getJSONObject(i);
 			Ingredient ingredient = new Ingredient();
-			Log.d(TAG, "id = " + object.getInt("id"));
-			ingredient.setId(object.getInt("id"));
-			Log.d(TAG, "name = " + object.getString("name"));
-			ingredient.setName(object.getString("name"));
-			Log.d(TAG, "type = " + object.getString("type"));
-			ingredient.setType(object.getString("type"));
-			Log.d(TAG, "value = " + object.getString("value"));
-			ingredient.setValue(object.getString("value"));
+			Log.d(TAG, "id = " + in.getInt("id"));
+			ingredient.setId(in.getInt("id"));
+			Log.d(TAG, "type = " + in.getString("type"));
+			ingredient.setType(in.getString("type"));
+			Log.d(TAG, "value = " + in.getString("value"));
+			ingredient.setValue(in.getString("value"));
+			Log.d(TAG, "name = " + in.getString("name"));
+			ingredient.setName(in.getString("name"));
 			ingredients.add(ingredient);
 		}
 		Log.d(TAG, "After replacing ?++");
@@ -308,6 +305,9 @@ public class ModelUtil {
 					favSteps.add(step);
 				}
 				Log.d(TAG, "Steps ArrayList: " + favSteps);
+				JSONArray ingredientsArray = jsonElements.getJSONObject(i).getJSONArray("ingredients");
+				ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) ModelUtil.getIngredientsFromJSON(jsonElements.getJSONObject(i));
+				favRecipe.setIngredients(ingredients);
 				favRecipe.setSteps(favSteps);
 				recipes.add((RecipeGeneral)favRecipe);
 				Log.d(TAG, "In MainListActivity getRecipes() Adding every recipe");

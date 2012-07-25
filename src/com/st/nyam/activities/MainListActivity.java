@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AbsListView;
@@ -21,6 +22,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.Menu;
@@ -90,6 +92,7 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 		isFavorites = getIntent().getBooleanExtra("isFavorites", false);
 		try {
 			if (action.equals(Constants.ACTION_SEARCH)) {
+				getSupportActionBar().setTitle("Поиск");
 				Log.d(TAG, "Constants.ACTION_SEARCH");
 				appData = intent.getBundleExtra(SearchManager.APP_DATA);
 				boolean isSearchFavorites = appData.getBoolean("isSearchFavorites");
@@ -111,6 +114,9 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 					setListAdapter(adapter);
 					setSupportProgressBarIndeterminateVisibility(false);
 					Log.d(TAG, "Getting Application 123 4");
+					if(adapter.isEmpty()) {
+						showNoResults();
+					}
 				} else {
 					isFavorites = false;
 					tempList.clear();
@@ -125,7 +131,7 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 					Log.d(TAG, "Search not Favorites 4");
 					setListAdapter(adapter);
 					Log.d(TAG, "Search not Favorites 5");
-						
+					
 				}
 			}
 			
@@ -186,6 +192,7 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 				
 				
 			} else if (action.equals(Constants.ACTION_CATALOG_RECIPES)) {
+				getSupportActionBar().setTitle("Каталог");
 				Log.d(TAG, "Constants.ACTION_CATALOG_RECIPES");
 				URL = (String)getIntent().getSerializableExtra("URL");
 				adapter = new LazyAdapter(this, R.layout.list_item_picture_text, tempList, false);
@@ -201,6 +208,8 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 			e.printStackTrace();
 		}
 	}
+	
+
 	
 	@Override
     protected void onRestart() {
@@ -232,7 +241,7 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 		if (action.equals(Constants.ACTION_FAVORITE_RECIPES)) {
 			intent.setAction(Constants.ACTION_FAVORITE_RECIPES);
 			startActivityForResult(intent, 1);
-		} 
+		}
 		if (action.equals(Constants.ACTION_SEARCH)) {
 			boolean isSearchFavorites = appData.getBoolean("isSearchFavorites", false);
 			Log.d(TAG, "isSearchFavorites: " + isSearchFavorites);
@@ -469,6 +478,9 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 	        	Log.d(TAG, "AsyncSearchRequest doInBackground4");
 	        	adapter.add((RecipeGeneral)r);
 	        }
+	        if(resultList.isEmpty()) {
+	        	showNoResults();
+			}
 	        setSupportProgressBarIndeterminateVisibility(false);
 	        if (dialog != null && dialog.isShowing()) {
 	        	try {
@@ -479,6 +491,12 @@ public class MainListActivity extends SherlockListActivity  implements OnScrollL
 	    }
 	}
 	
+	private void showNoResults() {
+		Toast t = Toast.makeText(MainListActivity.this, "Нет результатов", Toast.LENGTH_SHORT);
+    	t.setGravity(Gravity.CENTER_HORIZONTAL, 0, -100);
+    	t.show();
+		onSearchRequested();
+	}
 	
 	private class DownloadReceiver extends ResultReceiver {
 		

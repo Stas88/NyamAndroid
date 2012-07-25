@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="#000000" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#00ff00" >
+
+            <TextView
+                android:id="@+id/user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:text="Top User"
+                android:textColor="#111111"
+                android:background="@color/orange"
+                android:textSize="22dp" />
+            
+              
+   			 <TextView
+		            android:id="@+id/ingredients"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		        	android:background="#159357"
+		        	android:layout_centerHorizontal="true"
+		            android:minHeight="?android:attr/listPreferredItemHeight"
+		            android:textAppearance="?android:attr/textAppearanceLarge"
+		            android:visibility="gone"
+		            android:textSize="18dp" />
+              
+            <TextView
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bottom About"
+                android:textColor="#6f6f6f"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
